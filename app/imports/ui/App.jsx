@@ -12,8 +12,9 @@ export class App extends React.Component {
     }
   }
 
-  createStory = () => {
-    this.setState({story: Story});
+  createStory = (label) => {
+    console.log(`Creating story '${label}'`);
+    this.setState({story: <Story label={label}/>});
   }
 
   deleteStory = () => {
@@ -21,19 +22,63 @@ export class App extends React.Component {
   }
 
   render() {
-    const TheStory = this.state.story;
+    const story = this.state.story;
     return (
       <div>
         <h1>Storymaps editor</h1>
         {
-          !TheStory
-          ? <button onClick={this.createStory}>Create Story</button>
+          !story
+          ? <CreateStoryForm onSubmit={this.createStory}>Create Story</CreateStoryForm>
           : <div>
               <button onClick={this.deleteStory}>Delete Story</button>
-              <TheStory />
+              {story}
             </div>
         }
       </div>
     )
+  }
+}
+
+class CreateStoryForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const value = event.target.value.toLowerCase().replace(" ","-")
+      this.setState({value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const value = this.state.value.trim();
+    console.log(`A name was submitted: '${value}'`);
+
+    const pattern = new RegExp('^[a-z][a-z\-]*[a-z]$');
+    if (pattern.test(value) && value.split(" ").length == 1) {
+      this.props.onSubmit(value);
+    } else {
+      alert("Give me a (valid) label: two characters or more,"+
+            " start/end with a character ([a-z]), and no whitespaces.")
+    }
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Label:
+          <input required type="text" value={this.state.value}
+                  placeholder="A single-word name"
+                  onChange={this.handleChange}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
   }
 }
