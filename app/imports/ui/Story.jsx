@@ -9,29 +9,80 @@ export class Story extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: StoryTitle,
+      label: props.label,
+      title: null,
       planet: null,
+      basemap: null,
       chapters: []
     }
   }
 
-  handleAddChapter = (e) => {
+  handleCreateChapter = (e) => {
+    //TODO: parent components should get the 'value' only, not 'event'
     this.setState({chapters: [...this.state.chapters, StoryChapter]})
   }
 
+  handlePlanetSelected = (e) => {
+    //TODO: parent components should get the 'value' only, not 'event'
+    console.log(`Planet selected: ${e.target.value}`)
+  }
+
   render() {
-    const TheTitle = this.state.title;
     return (
       <div>
-        <TheTitle />
-        <button onClick={this.handleAddChapter}>Add Chapter</button>
+        <StoryTitle />
+        <MapPlanet onChange={this.handlePlanetSelected}/>
         <MapCanvas />
-        {
-          this.state.chapters.map((Chapter,i) => {
-            return <Chapter key={i.toString()} />
-          })
-        }
+        <StoryIntro />
+        <ChaptersList chapters={this.state.chapters}
+                      createChapter={this.handleCreateChapter}
+        />
       </div>
     );
   }
 };
+
+const StoryIntro = () => {
+  return null;
+}
+
+class MapPlanet extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    if (e.target.value) {
+      this.props.onChange(e);
+    }
+  }
+
+  /*
+    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
+  */
+  render() {
+    return (
+      <select required name="planets" onChange={this.handleChange}>
+        <option value="">Select a planet/body</option>
+        <option value="mars">Mars</option>
+        <option value="moon">Moon</option>
+        <option value="mercury">Mercury</option>
+      </select>
+    );
+  }
+}
+
+const ChaptersList = (props) => {
+  return (
+    <div>
+      <button onClick={props.createChapter}>Create Chapter</button>
+      {
+        props.chapters.map((Chapter,i) => {
+          return <Chapter key={i.toString()} />
+        })
+      }
+    </div>
+  )
+}
