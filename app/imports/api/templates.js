@@ -1,3 +1,12 @@
+const layers = {
+  url: ""
+}
+
+const media = {
+  url: "",
+  type: ""
+}
+
 const chapter = {
     title: "",
     text: "",
@@ -10,11 +19,14 @@ const chapter = {
             min: -90,
             max: 90
         }
-    }
+    },
+    media: [],
+    layers: []
 };
 
 const story = {
     title: "",
+    intro: "",
     body: "",
     basemap: "",
     chapters: []

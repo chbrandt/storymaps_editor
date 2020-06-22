@@ -1,23 +1,23 @@
 import React from 'react';
 
-import { StoryTitle, StoryChapter, StoryIntro, StoryPlanet } from './components_story.jsx';
-import { ChapterList } from './components_chapters.jsx'
+import { StoryTitle, StoryIntro, StoryPlanet, StoryChapters } from './components_story.jsx';
 import { Map as MapCanvas } from './Map.jsx';
 
 import { downloadText as download } from '../api/fileIO.js';
-import { story as story_template } from '../api/templates.js';
+// import { story as story_template } from '../api/templates.js';
 
 const basemaps = {mars:"url-mars",moon:"url-moon"};
 
 export class Story extends React.Component {
   constructor(props) {
     super(props);
-    this.state = story_template;
-  }
-
-  handleChapterCreate = (e) => {
-    //TODO: parent components should get the 'value' only, not 'event'
-    this.setState({chapters: [...this.state.chapters, StoryChapter]})
+    this.state = {
+      title: "",
+      intro: "",
+      body: "",
+      basemap: "",
+      chapters: []
+    }
   }
 
   handlePlanetSelect = (body) => {
@@ -45,7 +45,7 @@ export class Story extends React.Component {
     const story = this.state;
     // It's a JSON; nevertheless, a text file.
     // Use '.txt' to simplify users reading (recognized by any system)
-    const filename = `${this.state.label}.txt`;
+    const filename = `${this.props.label}.txt`;
     download(filename, JSON.stringify(story, null, 2));
   }
 
@@ -63,11 +63,13 @@ export class Story extends React.Component {
         </div>
 
         <div id="story-body">
-          <MapCanvas body={this.state.planet}/>
-          <ChapterList chapters={this.state.chapters}
-            createChapter={this.handleChapterCreate}
+          <StoryChapters chapters={this.state.chapters}
             onChange={this.handleChaptersChange}
           />
+        </div>
+
+        <div id="story-canvas">
+          <MapCanvas body={this.state.planet}/>
         </div>
       </div>
     );

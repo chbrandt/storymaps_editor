@@ -5,27 +5,16 @@ import { InputNumber } from './components_base.jsx';
 import { TextArea } from './components_base.jsx';
 
 /*
-  LIST
-*/
-export const ChapterList = (props) => {
-  return (
-    <div>
-      <button onClick={props.createChapter}>Create Chapter</button>
-      {props.chapters.map((Chapter,i) => {
-          return <Chapter key={i.toString()}/>
-      })}
-    </div>
-  );
-}
-
-/*
   TITLE
 */
 export const ChapterTitle = (props) => {
+  handleChange = (value) => {
+    props.onChange(props.name, value);
+  }
   return (
     <InputText label="Chapter title"
               value={props.title}
-              onChange={props.onChange}
+              onChange={handleChange}
     />
   );
 }
@@ -34,10 +23,13 @@ export const ChapterTitle = (props) => {
   TEXT
 */
 export const ChapterText = (props) => {
+  handleChange = (value) => {
+    props.onChange(props.name, value);
+  }
   return (
     <TextArea label="Chapter text" min={10} max={400}
               value={props.text}
-              onChange={props.onChange}
+              onChange={handleChange}
     />
   );
 }

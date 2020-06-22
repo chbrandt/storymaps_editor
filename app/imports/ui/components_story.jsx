@@ -6,10 +6,8 @@ Docs about <input>
 */
 import React from 'react';
 
-import { ChapterTitle, ChapterText, ChapterMedia, ChapterView, ChapterLayers } from './components_chapters.jsx';
+import { Chapter } from './Chapter.jsx';
 import { Select } from './components_base.jsx';
-
-import { chapter as chapter_template } from '../api/templates.js';
 
 
 
@@ -52,91 +50,6 @@ export class StoryTitle extends React.Component {
 }
 
 /*
-  CHAPTER
-*/
-export class StoryChapter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = chapter_template;
-  }
-
-  updateView(view) {
-    console.log(view);
-    this.setState({view})
-  }
-
-  updateTitle(value) {
-    this.setState({title: value});
-    console.log(`Chapter title (new): ${value}`)
-  }
-
-  updateText(value) {
-    this.setState({text: value});
-    console.log(`Chapter text (new): ${value}`)
-  }
-
-  updateContent(e) {
-    console.log(e);
-    if (e.target.name == "chapter_title") {
-      this.updateTitle(e.target.value);
-    }
-    if (e.target.name == "chapter_text") {
-      this.updateText(e.target.value);
-    }
-    if (e.target.name.startsWith("chapter_view")) {
-      this.updateView(e.target);
-    }
-  }
-
-  handleLoseFocus = (e) => {
-    echo(e);
-    this.updateContent(e)
-  }
-
-  handlePressEnter = (e) => {
-    if (e.keyCode == 13) {
-      echo(e);
-      this.updateContent(e)
-    }
-  }
-
-  handleChange = (value) => {
-    console.log(value);
-  }
-
-  render() {
-    return (
-      <div>
-        <ChapterTitle title={this.state.title}
-                      name="title"
-                      onChange={this.handleChange}
-        />
-        <br/>
-        <ChapterText text={this.state.text}
-                      name="text"
-                      onChange={this.handleChange}
-        />
-        <br/>
-        <ChapterView view={this.state.view}
-                      name="view"
-                      onChange={this.handleChange}
-        />
-        <br/>
-        <ChapterMedia value={this.state.media}
-                      name="media"
-                      onChange={this.handleChange}
-        />
-        <br/>
-        <ChapterLayers value={this.state.layers}
-                        name="layers"
-                        onChange={this.handleChange}
-        />
-      </div>
-    );
-  }
-}
-
-/*
   INTRO
 */
 export const StoryIntro = (props) => {
@@ -153,4 +66,44 @@ export const StoryPlanet = (props) => {
             onChange={props.onChange}
     />
   );
+}
+
+/*
+  CHAPTERS
+*/
+export class StoryChapters extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      chapters: []
+    }
+  }
+
+  handleCreate = (e) => {
+    e.preventDefault();
+    //TODO: parent components should get the 'value' only, not 'event'
+    this.setState({chapters: [...this.state.chapters, {}]})
+  }
+
+  handleChange = (index, value) => {
+    console.log(index, value);
+    let chapters = this.state.chapters;
+    chapters[index] = value;
+    this.setState({chapters});
+    this.props.onChange(chapters);
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleCreate}>Create Chapter</button>
+        {this.state.chapters.map((data,i) => {
+            return <Chapter key={i.toString()}
+                              index={i.toString()}
+                              value={data}
+                              onChange={this.handleChange}/>
+        })}
+      </div>
+    );
+  }
 }

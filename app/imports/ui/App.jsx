@@ -27,7 +27,9 @@ export class App extends React.Component {
         <h1>Storymaps editor</h1>
         {
           !story
-          ? <CreateStoryForm onSubmit={this.createStory}>Create Story</CreateStoryForm>
+          ? <CreateStoryForm onSubmit={this.createStory}>
+              Create Story
+            </CreateStoryForm>
           : <div>
               <button onClick={this.deleteStory}>Delete Story</button>
               {story}
