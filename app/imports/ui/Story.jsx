@@ -1,5 +1,4 @@
 import React from 'react';
-import 'leaflet/dist/leaflet.css';
 
 import { StoryTitle, StoryChapter, StoryIntro, StoryPlanet } from './story_components.jsx';
 import { Map as MapCanvas } from './Map.jsx';
