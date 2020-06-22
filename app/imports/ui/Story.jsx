@@ -11,67 +11,76 @@ export class Story extends React.Component {
     this.state = {
       label: props.label,
       title: null,
+      intro: null,
       planet: null,
-      basemap: null,
       chapters: []
     }
   }
 
-  handleCreateChapter = (e) => {
+  handleChapterCreate = (e) => {
     //TODO: parent components should get the 'value' only, not 'event'
     this.setState({chapters: [...this.state.chapters, StoryChapter]})
   }
 
-  handlePlanetSelected = (e) => {
-    //TODO: parent components should get the 'value' only, not 'event'
-    console.log(`Planet selected: ${e.target.value}`)
+  handlePlanetChange = (value) => {
+    console.log(`Story-Planet changed: ${value}`);
+    this.setState({planet: value});
+  }
+
+  handleIntroChange = (value) => {
+    console.log(`Story-Intro changed: ${value}`);
+    this.setState({intro: value})
+  }
+
+  handleTitleChange = (value) => {
+    console.log(`Story-Title changed: ${value}`);
+    this.setState({title: value})
+  }
+
+  handleChaptersChange = (value) => {
+    console.log(`Story-Chapters changed: ${value}`);
+    this.setState({chapters: value})
   }
 
   render() {
     return (
       <div>
-        <StoryTitle />
-        <MapPlanet onChange={this.handlePlanetSelected}/>
-        <MapCanvas />
-        <StoryIntro />
+        <StoryTitle onChange={this.handleTitleChange}/>
+        <StoryPlanet onChange={this.handlePlanetChange}/>
+        <MapCanvas body={this.state.planet}/>
+        <StoryIntro onChange={this.handleIntroChange}/>
         <ChaptersList chapters={this.state.chapters}
-                      createChapter={this.handleCreateChapter}
+                      createChapter={this.handleChapterCreate}
+                      onChange={this.handleChaptersChange}
         />
       </div>
     );
   }
 };
 
-const StoryIntro = () => {
+const StoryIntro = (props) => {
   return null;
+  // <TextArea onChange={(e) => {
+  //   props.onChange(e.target.value)
+  // }}/>
 }
 
-class MapPlanet extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(e) {
-    if (e.target.value) {
-      this.props.onChange(e);
-    }
-  }
-
-  /*
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
-  */
-  render() {
-    return (
-      <select required name="planets" onChange={this.handleChange}>
-        <option value="">Select a planet/body</option>
-        <option value="mars">Mars</option>
-        <option value="moon">Moon</option>
-        <option value="mercury">Mercury</option>
-      </select>
-    );
-  }
+const StoryPlanet = (props) => {
+  return (
+    /*
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
+    */
+    <select required name="planets"
+            onChange={(e) => {
+              if(e.target.value){
+                props.onChange(e.target.value)
+              }}}>
+      <option value="">Select a planet/body</option>
+      <option value="mars">Mars</option>
+      <option value="moon">Moon</option>
+      <option value="mercury">Mercury</option>
+    </select>
+  );
 }
 
 const ChaptersList = (props) => {

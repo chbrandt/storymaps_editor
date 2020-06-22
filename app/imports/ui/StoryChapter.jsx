@@ -4,7 +4,7 @@ import { ChapterTitle } from './ChapterTitle.jsx';
 import { ChapterText } from './ChapterText.jsx';
 import { ChapterMedia } from './ChapterMedia.jsx';
 import { ChapterView } from './ChapterView.jsx';
-import { ChapterLayer } from './ChapterLayer.jsx';
+import { ChapterLayers } from './ChapterLayers.jsx';
 
 /*
 Docs about <input>
@@ -17,8 +17,14 @@ const chapter_template = {
   title: null,
   text: null,
   view: {
-    lon:[-180,180],
-    lat:[-90,90]
+    lon: {
+      min:-180,
+      max:180
+    },
+    lat: {
+      min:-90,
+      max:90
+    }
   }
 }
 
@@ -37,7 +43,7 @@ export class StoryChapter extends React.Component {
     console.log(view);
     this.setState({view})
   }
-  
+
   updateTitle(value) {
     this.setState({title: value});
     console.log(`Chapter title (new): ${value}`)
@@ -73,27 +79,37 @@ export class StoryChapter extends React.Component {
     }
   }
 
+  handleChange = (value) => {
+    console.log(value);
+  }
+
   render() {
     return (
       <div>
-        <ChapterTitle defaultValue={this.state.title}
-                      onKeyDown={this.handlePressEnter}
-                      onBlur={this.handleLoseFocus}
+        <ChapterTitle title={this.state.title}
+                      name="title"
+                      onChange={this.handleChange}
         />
         <br/>
-        <ChapterText defaultValue={this.state.text}
-                      onKeyDown={this.handlePressEnter}
-                      onBlur={this.handleLoseFocus}
+        <ChapterText text={this.state.text}
+                      name="text"
+                      onChange={this.handleChange}
         />
         <br/>
-        <ChapterView defaultValue={this.state.view}
-                      onKeyDown={this.handlePressEnter}
-                      onBlur={this.handleLoseFocus}
+        <ChapterView view={this.state.view}
+                      name="view"
+                      onChange={this.handleChange}
         />
         <br/>
-        <ChapterMedia />
+        <ChapterMedia value={this.state.media}
+                      name="media"
+                      onChange={this.handleChange}
+        />
         <br/>
-        <ChapterLayer />
+        <ChapterLayers value={this.state.layers}
+                        name="layers"
+                        onChange={this.handleChange}
+        />
       </div>
     );
   }

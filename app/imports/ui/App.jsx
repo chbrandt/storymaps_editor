@@ -50,7 +50,7 @@ class CreateStoryForm extends React.Component {
 
   handleChange(event) {
     const value = event.target.value.toLowerCase().replace(" ","-")
-      this.setState({value});
+    this.setState({value});
   }
 
   handleSubmit(event) {
