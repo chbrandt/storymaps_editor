@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { StoryTitle, StoryChapter, StoryIntro, StoryPlanet } from './story_components.jsx';
+import { StoryTitle, StoryChapter, StoryIntro, StoryPlanet } from './components_story.jsx';
+import { ChapterList } from './components_chapters.jsx'
 import { Map as MapCanvas } from './Map.jsx';
 
 import { downloadText as download } from '../api/fileIO.js';
@@ -72,14 +73,3 @@ export class Story extends React.Component {
     );
   }
 };
-
-const ChapterList = (props) => {
-  return (
-    <div>
-      <button onClick={props.createChapter}>Create Chapter</button>
-      {props.chapters.map((Chapter,i) => {
-          return <Chapter key={i.toString()}/>
-      })}
-    </div>
-  );
-}

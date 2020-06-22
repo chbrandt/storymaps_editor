@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Hello } from './Hello.jsx';
-import { Info } from './Info.jsx';
 import { Story } from './Story.jsx';
 
 export class App extends React.Component {

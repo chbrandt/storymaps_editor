@@ -6,13 +6,8 @@ Docs about <input>
 */
 import React from 'react';
 
-import { ChapterTitle } from './ChapterTitle.jsx';
-import { ChapterText } from './ChapterText.jsx';
-import { ChapterMedia } from './ChapterMedia.jsx';
-import { ChapterView } from './ChapterView.jsx';
-import { ChapterLayers } from './ChapterLayers.jsx';
-
-import { Select } from './base_components.jsx';
+import { ChapterTitle, ChapterText, ChapterMedia, ChapterView, ChapterLayers } from './components_chapters.jsx';
+import { Select } from './components_base.jsx';
 
 import { chapter as chapter_template } from '../api/templates.js';
 

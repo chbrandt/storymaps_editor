@@ -2,8 +2,6 @@ import React from 'react';
 
 import { capitalize } from '../api/utils.js';
 
-
-
 const Select = (props) => {
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
   const handleChange = (e) => {
