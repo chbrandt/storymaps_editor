@@ -6,6 +6,8 @@ import { Map as MapCanvas } from './Map.jsx';
 import { downloadText as download } from '../api/fileIO.js';
 import { story as story_template } from '../api/templates.js';
 
+const basemaps = {mars:"url-mars",moon:"url-moon"};
+
 export class Story extends React.Component {
   constructor(props) {
     super(props);
@@ -17,9 +19,10 @@ export class Story extends React.Component {
     this.setState({chapters: [...this.state.chapters, StoryChapter]})
   }
 
-  handlePlanetSelect = (value) => {
-    console.log(`Story-Planet changed: ${value}`);
-    this.setState({planet: value});
+  handlePlanetSelect = (body) => {
+    console.log(`Story-Planet changed: ${body}`);
+    const basemap = basemaps[body]
+    this.setState({body, basemap});
   }
 
   handleIntroChange = (value) => {
@@ -46,7 +49,7 @@ export class Story extends React.Component {
   }
 
   render() {
-    const basemaps = {mars:"url-mars",moon:"url-moon"};
+    console.log(this.state);
     return (
       <div id="story">
         <button onClick={this.downloadStory}>Download Story</button>
@@ -54,7 +57,7 @@ export class Story extends React.Component {
         <div id="story-header">
           <StoryTitle onChange={this.handleTitleChange}/>
           <StoryPlanet onChange={this.handlePlanetSelect}
-            basemaps={basemaps}/>
+            bodies={Object.keys(basemaps)}/>
           <StoryIntro onChange={this.handleIntroChange}/>
         </div>
 

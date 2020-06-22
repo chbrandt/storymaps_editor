@@ -1,5 +1,28 @@
 import React from 'react';
 
+import { capitalize } from '../api/utils.js';
+
+
+
+const Select = (props) => {
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
+  const handleChange = (e) => {
+    if(e.target.value){
+      props.onChange(e.target.value)
+    }
+  }
+  const name = props.label;
+  const placeholder = props.placeholder;
+  return (
+    <select name={name} required onChange={handleChange}>
+      <option value="">{placeholder}</option>
+      {props.bodies.map((body) => {
+          return <option key={body} value={body}>{capitalize(body)}</option>
+      })}
+    </select>
+  );
+}
+
 const InputNumber = (props) => {
   //TODO: make this a class component to keep a state "number" to be validated.
   const name = props.label ? props.label.replace(" ","_") : "text";
@@ -56,4 +79,4 @@ const TextArea = (props) => {
   );
 }
 
-export {InputNumber, InputText, TextArea};
+export {Select, InputNumber, InputText, TextArea};

@@ -18,6 +18,7 @@ export class App extends React.Component {
   }
 
   deleteStory = () => {
+    console.log(`Delete story.`);
     this.setState({story: null});
   }
 
@@ -56,8 +57,7 @@ class CreateStoryForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const value = this.state.value.trim();
-    console.log(`A name was submitted: '${value}'`);
-
+    // console.log(`A name was submitted: '${value}'`);
     const pattern = new RegExp('^[a-z][a-z\-]*[a-z]$');
     if (pattern.test(value) && value.split(" ").length == 1) {
       this.props.onSubmit(value);
@@ -73,8 +73,8 @@ class CreateStoryForm extends React.Component {
         <label>
           Label:
           <input type="text" value={this.state.value} required
-                  placeholder="A single-word name"
-                  onChange={this.handleChange}
+            placeholder="A single-word name"
+            onChange={this.handleChange}
           />
         </label>
         <input type="submit" value="Submit" />
