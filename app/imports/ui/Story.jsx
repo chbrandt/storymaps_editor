@@ -1,20 +1,16 @@
 import React from 'react';
 import 'leaflet/dist/leaflet.css';
 
-import { StoryTitle } from './StoryTitle.jsx';
-import { StoryChapter } from './StoryChapter.jsx';
+import { StoryTitle, StoryChapter, StoryIntro, StoryPlanet } from './story_components.jsx';
 import { Map as MapCanvas } from './Map.jsx';
+
+import { downloadText as download } from '../api/fileIO.js';
+import { story as story_template } from '../api/templates.js';
 
 export class Story extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      label: props.label,
-      title: null,
-      intro: null,
-      planet: null,
-      chapters: []
-    }
+    this.state = story_template;
   }
 
   handleChapterCreate = (e) => {
@@ -22,7 +18,7 @@ export class Story extends React.Component {
     this.setState({chapters: [...this.state.chapters, StoryChapter]})
   }
 
-  handlePlanetChange = (value) => {
+  handlePlanetSelect = (value) => {
     console.log(`Story-Planet changed: ${value}`);
     this.setState({planet: value});
   }
@@ -42,56 +38,46 @@ export class Story extends React.Component {
     this.setState({chapters: value})
   }
 
+  downloadStory = () => {
+    const story = this.state;
+    // It's a JSON; nevertheless, a text file.
+    // Use '.txt' to simplify users reading (recognized by any system)
+    const filename = `${this.state.label}.txt`;
+    download(filename, JSON.stringify(story, null, 2));
+  }
+
   render() {
+    const basemaps = {mars:"url-mars",moon:"url-moon"};
     return (
-      <div>
-        <StoryTitle onChange={this.handleTitleChange}/>
-        <StoryPlanet onChange={this.handlePlanetChange}/>
-        <MapCanvas body={this.state.planet}/>
-        <StoryIntro onChange={this.handleIntroChange}/>
-        <ChaptersList chapters={this.state.chapters}
-                      createChapter={this.handleChapterCreate}
-                      onChange={this.handleChaptersChange}
-        />
+      <div id="story">
+        <button onClick={this.downloadStory}>Download Story</button>
+
+        <div id="story-header">
+          <StoryTitle onChange={this.handleTitleChange}/>
+          <StoryPlanet onChange={this.handlePlanetSelect}
+            basemaps={basemaps}/>
+          <StoryIntro onChange={this.handleIntroChange}/>
+        </div>
+
+        <div id="story-body">
+          <MapCanvas body={this.state.planet}/>
+          <ChapterList chapters={this.state.chapters}
+            createChapter={this.handleChapterCreate}
+            onChange={this.handleChaptersChange}
+          />
+        </div>
       </div>
     );
   }
 };
 
-const StoryIntro = (props) => {
-  return null;
-  // <TextArea onChange={(e) => {
-  //   props.onChange(e.target.value)
-  // }}/>
-}
-
-const StoryPlanet = (props) => {
-  return (
-    /*
-      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
-    */
-    <select required name="planets"
-            onChange={(e) => {
-              if(e.target.value){
-                props.onChange(e.target.value)
-              }}}>
-      <option value="">Select a planet/body</option>
-      <option value="mars">Mars</option>
-      <option value="moon">Moon</option>
-      <option value="mercury">Mercury</option>
-    </select>
-  );
-}
-
-const ChaptersList = (props) => {
+const ChapterList = (props) => {
   return (
     <div>
       <button onClick={props.createChapter}>Create Chapter</button>
-      {
-        props.chapters.map((Chapter,i) => {
-          return <Chapter key={i.toString()} />
-        })
-      }
+      {props.chapters.map((Chapter,i) => {
+          return <Chapter key={i.toString()}/>
+      })}
     </div>
-  )
+  );
 }

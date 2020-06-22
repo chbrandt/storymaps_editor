@@ -72,7 +72,7 @@ class CreateStoryForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Label:
-          <input required type="text" value={this.state.value}
+          <input type="text" value={this.state.value} required
                   placeholder="A single-word name"
                   onChange={this.handleChange}
           />
