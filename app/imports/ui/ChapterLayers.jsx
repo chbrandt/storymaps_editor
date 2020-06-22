@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ChapterLayer = (props) => {
+export const ChapterLayers = (props) => {
   return (
     <label>
       Chapter layer:

@@ -28,9 +28,6 @@ export class ChapterMedia extends React.Component {
   handleSelectFile = (e) => {
     const file = this.fileInput.current.files.item(0);
     console.log(`Filename (${file.type}): ${file.name} (${Number(file.size/1024).toFixed(1)} KB)`)
-    // this.setState({
-    //   media: { file }
-    // })
 
     // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications#Example_Showing_thumbnails_of_user-selected_images
     const reader = new FileReader();

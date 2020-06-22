@@ -12,16 +12,11 @@ import { ChapterMedia } from './ChapterMedia.jsx';
 import { ChapterView } from './ChapterView.jsx';
 import { ChapterLayers } from './ChapterLayers.jsx';
 
-import { Select } from './Components.jsx';
+import { Select } from './base_components.jsx';
 
 import { chapter as chapter_template } from '../api/templates.js';
 
 
-
-function echo(e) {
-    msg = `${e.target.name}(${e.type}): ${e.target.value}`;
-    console.log(msg);
-}
 
 /*
   TITLE
@@ -61,6 +56,9 @@ export class StoryTitle extends React.Component {
   }
 }
 
+/*
+  CHAPTER
+*/
 export class StoryChapter extends React.Component {
   constructor(props) {
     super(props);
@@ -143,6 +141,9 @@ export class StoryChapter extends React.Component {
   }
 }
 
+/*
+  INTRO
+*/
 export const StoryIntro = (props) => {
   return null;
 }
