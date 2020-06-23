@@ -55,6 +55,7 @@ export class Chapter extends React.Component {
   // }
 
   handleChange = (field, value) => {
+    console.log(`Field '${field}' changed: ${JSON.stringify(value)}`);
     const state = Object.assign({}, this.state, {[field]: value});
     this.setState(state);
     this.props.onChange(this.props.index, state);

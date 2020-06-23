@@ -99,9 +99,9 @@ export class StoryChapters extends React.Component {
         <button onClick={this.handleCreate}>Create Chapter</button>
         {this.state.chapters.map((data,i) => {
             return <Chapter key={i.toString()}
-                              index={i.toString()}
-                              value={data}
-                              onChange={this.handleChange}/>
+                            index={i.toString()}
+                            value={data}
+                            onChange={this.handleChange}/>
         })}
       </div>
     );

@@ -4,6 +4,8 @@ import { InputText } from './components_base.jsx';
 import { InputNumber } from './components_base.jsx';
 import { TextArea } from './components_base.jsx';
 
+import { validBounds } from '../api/utils.js';
+
 /*
   TITLE
 */
@@ -122,17 +124,6 @@ export const ChapterLayers = (props) => {
 /*
   VIEW
 */
-function validBounds({lat,lon}) {
-  const checkLat = (val) => {return (-90 <= val && val <= +90)}
-  const checkLon = (val) => {return (-180 <= val && val <= +180)}
-  if (!(checkLat(lat.min) &&
-        checkLat(lat.max) &&
-        checkLon(lon.min) &&
-        checkLon(lon.max))
-      ){return false}
-  return (lat.min < lat.max && lon.min < lon.max);
-}
-
 export class ChapterView extends React.Component {
   constructor(props) {
     super(props);
@@ -144,7 +135,7 @@ export class ChapterView extends React.Component {
     let view = {...this.state, [axis]: {...this.state[axis], [limit]: value}};
     if (validBounds(view)) {
       this.setState(view);
-      this.props.onChange(view);
+      this.props.onChange(this.props.name, view);
     }
   }
 
