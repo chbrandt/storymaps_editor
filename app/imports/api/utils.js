@@ -41,4 +41,8 @@ function capitalize(string, what) {
   return string.charAt(0) + string.slice(1);
 }
 
-export {capitalize, validBounds};
+function stringify(obj, indent) {
+  return JSON.stringify(obj, null, indent)
+}
+
+export {stringify, capitalize, validBounds};

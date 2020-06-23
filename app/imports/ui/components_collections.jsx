@@ -26,7 +26,7 @@ export function toList(ItemComponent) {
           items: []
         };
         // this.new_item = {} // this is just a placeholder for new items, will be subtituted.
-        this.new_item = undefined; // this is just a placeholder for new items, will be subtituted.
+        this.new_item = undefined; // placeholder/template for new items.
       }
 
       handleAdd = (e) => {
@@ -57,25 +57,29 @@ export function toList(ItemComponent) {
         this.setState({items});
 
         /*
-          Instead, we are just pushing it to Parent.
+          And we are (also) pushing it to Parent.
           */
         this.props.onChange(items);
       }
 
       render() {
         const items = this.state.items;
+        const button = this.props.button || "Add";
         return (
           <div>
-            <button onClick={this.handleAdd}>Add media</button>
-            {items.map((item,i) => {
-              const index = i.toString();
-              return (
-                <ItemComponent key={index}
-                                value={item}
-                                onChange={(value) => this.handleChange(index, value)}
-                />
-              );
-            })}
+            <button onClick={this.handleAdd}>{button}</button>
+            <label>
+              {this.props.label}
+              {items.map((item,i) => {
+                const index = i.toString();
+                return (
+                  <ItemComponent key={index}
+                                  value={item}
+                                  onChange={(value) => this.handleChange(index, value)}
+                  />
+                );
+              })}
+            </label>
           </div>
         );
       }

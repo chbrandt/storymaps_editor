@@ -7,102 +7,46 @@ Docs about <input>
 import React from 'react';
 
 import { Chapter } from './Chapter.jsx';
+
 import { Select } from './components_base.jsx';
+import { TextArea } from './components_base.jsx';
+import { InputText } from './components_base.jsx';
 
+import { toList } from './components_collections.jsx';
 
-
-/*
-  TITLE
-*/
-export class StoryTitle extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  updateTitle(value) {
-    this.props.onChange(value);
-  }
-
-  handleLoseFocus = (e) => {
-    this.updateTitle(e.target.value);
-  }
-
-  handlePressEnter = (e) => {
-    if (e.keyCode == 13) {
-      this.updateTitle(e.target.value);
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <label>
-        Story title:
-        <input type="text" placeholder="Story title"
-               key="story_title" name="story_title"
-               defaultValue={this.props.title}
-               onKeyDown={this.handlePressEnter}
-               onBlur={this.handleLoseFocus}/>
-        </label>
-      </div>
-    );
-  }
-}
-
-/*
-  INTRO
-*/
-export const StoryIntro = (props) => {
-  return null;
-}
-
-/*
-  PLANET
-*/
-export const StoryPlanet = (props) => {
-  return (
-    <Select label="planets" placeholder="Select a planet/body"
-            items={props.bodies}
-            onChange={props.onChange}
-    />
-  );
-}
 
 /*
   CHAPTERS
 */
-export class StoryChapters extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      chapters: []
-    }
-  }
+export const StoryChapters = toList(Chapter);
 
-  handleCreate = (e) => {
-    e.preventDefault();
-    this.setState({chapters: [...this.state.chapters, {}]})
-  }
+/*
+  TITLE
+*/
+export const StoryTitle = (props) => <InputText label="Story title"
+                                                name="title"
+                                                value={props.title}
+                                                onChange={
+                                                  (value) => props.onChange("title", value)}
+                                                />
 
-  handleChange = (index, value) => {
-    console.log(index, value);
-    let chapters = this.state.chapters;
-    chapters[index] = value;
-    this.setState({chapters});
-    this.props.onChange(chapters);
-  }
+/*
+  INTRO
+*/
+export const StoryIntro = (props) => <TextArea label="Story intro"
+                                                name="intro"
+                                                value={props.title}
+                                                onChange={
+                                                  (value) => props.onChange("intro", value)}
+                                                />
 
-  render() {
-    return (
-      <div>
-        <button onClick={this.handleCreate}>Create Chapter</button>
-        {this.state.chapters.map((data,i) => {
-            return <Chapter key={i.toString()}
-                            index={i.toString()}
-                            value={data}
-                            onChange={this.handleChange}/>
-        })}
-      </div>
-    );
-  }
-}
+/*
+  PLANET
+*/
+export const StoryPlanet = (props) => <Select label="planets"
+                                              placeholder="Select a planet/body"
+                                              name="body"
+                                              items={props.bodies}
+                                              onChange={
+                                                (value) => props.onChange("body", value)}
+                                              />

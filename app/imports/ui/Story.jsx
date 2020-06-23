@@ -4,9 +4,10 @@ import { StoryTitle, StoryIntro, StoryPlanet, StoryChapters } from './components
 import { Map as MapCanvas } from './Map.jsx';
 
 import { downloadText as download } from '../api/fileIO.js';
+import { stringify } from '../api/utils.js';
 // import { story as story_template } from '../api/templates.js';
 
-const basemaps = {mars:"url-mars",moon:"url-moon"};
+const BASEMAPS = {mars:"url-mars",moon:"url-moon"};
 
 export class Story extends React.Component {
   constructor(props) {
@@ -41,26 +42,52 @@ export class Story extends React.Component {
     this.setState({chapters: value})
   }
 
+  handleChange = (field, value) => {
+    console.log(`[Story] ${field}:${value}`);
+
+    const state = Object.assign({}, this.state, {[field]: value});
+    /*
+      Component 'state' here is not really playing a role,
+      we may want to use it to have a layer of internal validation before
+      pushing data to parent component.
+      If this was a form, for example, we could have the 'setState(state)'
+      as an internal validator while the fields are being field, and push
+      them all to Parent when 'submit'/'save'.
+      */
+    this.setState(state);
+
+    /*
+      Instead, we are just pushing it to Parent.
+      */
+    // this.props.onChange(this.props.index, state);
+
+    /*
+      In this case, contrary to 'Chapter', 'Story' is the top component
+      we want to have 'this.state' hosting the data and no push to parent.
+
+      TODO: make a _base-component_ for these "data management/hub" components (Story, Chapter)
+      */
+  }
+
   downloadStory = () => {
-    //TODO: eventually, make a package (zip) with json+media in it.
+    //TODO: implement a make-a-package (zip) function with (json + media) in it.
+
     const story = this.state;
-    // It's a JSON; nevertheless, a text file.
-    // Use '.txt' to simplify users reading (recognized by any system)
-    const filename = `${this.props.label}.txt`;
-    download(filename, JSON.stringify(story, null, 2));
+    const filext = "txt"
+    const filename = `${this.props.label}.${filext}`;
+    download(filename, stringify(story, 2));
   }
 
   render() {
-    console.log(this.state);
+    console.log(`Story: ${stringify(this.state)}`);
     return (
       <div id="story">
         <button onClick={this.downloadStory}>Download Story</button>
 
         <div id="story-header">
-          <StoryTitle onChange={this.handleTitleChange}/>
-          <StoryPlanet onChange={this.handlePlanetSelect}
-            bodies={Object.keys(basemaps)}/>
-          <StoryIntro onChange={this.handleIntroChange}/>
+          <StoryTitle onChange={this.handleChange}/>
+          <StoryPlanet onChange={this.handleChange} bodies={Object.keys(BASEMAPS)}/>
+          <StoryIntro onChange={this.handleChange}/>
         </div>
 
         <div id="story-body">

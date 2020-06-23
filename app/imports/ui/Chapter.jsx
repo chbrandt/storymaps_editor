@@ -13,7 +13,7 @@ import { chapter as chapter_template } from '../api/templates.js';
 export class Chapter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = Object.keys(props.value).length !== 0 ? props.value : chapter_template;
+    this.state = props.value || chapter_template;
   }
 
   handleChange = (field, value) => {
@@ -56,51 +56,16 @@ export class Chapter extends React.Component {
         <br/>
         <ChapterMedia value={this.state.media}
                       name="media"
+                      label="Media:"
                       onChange={(value) => this.handleChange("media", value)}
         />
         <br/>
         <ChapterLayers value={this.state.layers}
                         name="layers"
+                        label="Layers:"
                         onChange={(value) => this.handleChange("layers", value)}
         />
       </div>
     );
   }
 }
-  // updateView(view) {
-  //   console.log(view);
-  //   this.setState({view})
-  // }
-  //
-  // updateTitle(value) {
-  //   this.setState({title: value});
-  //   console.log(`Chapter title (new): ${value}`)
-  // }
-  //
-  // updateText(value) {
-  //   this.setState({text: value});
-  //   console.log(`Chapter text (new): ${value}`)
-  // }
-  //
-  // updateContent(e) {
-  //   console.log(e);
-  //   if (e.target.name == "chapter_title") {
-  //     this.updateTitle(e.target.value);
-  //   }
-  //   if (e.target.name == "chapter_text") {
-  //     this.updateText(e.target.value);
-  //   }
-  //   if (e.target.name.startsWith("chapter_view")) {
-  //     this.updateView(e.target);
-  //   }
-  // }
-  //
-  // handleLoseFocus = (e) => {
-  //   this.updateContent(e)
-  // }
-  //
-  // handlePressEnter = (e) => {
-  //   if (e.keyCode == 13) {
-  //     this.updateContent(e)
-  //   }
-  // }
