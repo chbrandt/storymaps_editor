@@ -9,9 +9,8 @@ import { validBounds } from '../api/utils.js';
 
 import { toList } from './components_collections.jsx';
 
-/*
-  TITLE
-*/
+
+/* TITLE */
 export const ChapterTitle = (props) => {
   handleChange = (value) => {
     props.onChange(value);
@@ -24,9 +23,8 @@ export const ChapterTitle = (props) => {
   );
 }
 
-/*
-  TEXT
-*/
+
+/* TEXT */
 export const ChapterText = (props) => {
   handleChange = (value) => {
     props.onChange(value);
@@ -40,9 +38,7 @@ export const ChapterText = (props) => {
 }
 
 
-/*
-  MEDIA-IMAGE
-*/
+/* IMAGE */
 export class ChapterImage extends React.Component {
   constructor(props) {
     super(props);
@@ -105,23 +101,19 @@ export class ChapterImage extends React.Component {
   }
 }
 
-/*
-  LAYERS
-*/
-const ChapterLayer = (props) => {
 
+/* LAYERS */
+const ChapterLayer = (props) => {
   const handleChange = (e) => {
     props.onChange(e.target.value);
   }
-
   return (
     <InputSelect label="Chapter layer" placeholder="https://geo.example.org/wms/..." />
   );
 }
 
-/*
-  VIEW
-*/
+
+/* VIEW */
 export class ChapterView extends React.Component {
   //TODO: adjust synchronization between data validation and component state
   //      This component will commit changes (to parent component, 'Chapter')

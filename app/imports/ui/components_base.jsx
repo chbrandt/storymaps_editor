@@ -10,7 +10,6 @@ export const Select = (props) => {
   - placeholder: dummy item in the selection list (empty/"" value associated)
   - label : (internal) "name" for (HTML) <select> element (default is 'selector')
   */
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
   const handleChange = (e) => {
     if(e.target.value){
       props.onChange(e.target.value)
@@ -34,15 +33,14 @@ export const InputSelect = (props) => {
   - label : (optional) label to put next to the input field
   - placeholder : (optional) placeholder for the input field
   */
-
   const handleChange = (e) => {
     props.onChange(e.target.value);
   }
-
+  const placeholder = props.placeholder || "";
   return (
     <label>
       {this.props.label}
-      <input type="text" placeholder={props.placeholder}
+      <input type="text" placeholder={placeholder}
              onKeyDown={(e) => {if(e.keyCode == 13){handleChange(e)}}}
              onBlur={(e) => {handleChange(e)}}
              list="optional_URLs"
@@ -55,13 +53,12 @@ export const InputSelect = (props) => {
 
 }
 
+
 export const InputNumber = (props) => {
 // TODO: make this a class component to keep a state "number" to be validated.
-
   const handleChange = (e) => {
     props.onChange(Number(e.target.value));
   };
-
   const placeholder = props.placeholder || "";
   return (
     <label>
@@ -78,13 +75,14 @@ export const InputNumber = (props) => {
   );
 }
 
+
 export const InputText = (props) => {
-  const tip = "text..";
+  const placeholder = props.placeholder || "";
   return (
     <label>
       {props.label}
       <input type="text" spellCheck="true"
-        placeholder={tip}
+        placeholder={placeholder}
         defaultValue={props.value}
         onKeyDown={(e) => {if(e.keyCode == 13){props.onChange(e.target.value)}}}
         onBlur={(e) => {props.onChange(e.target.value)}}
@@ -93,16 +91,17 @@ export const InputText = (props) => {
   );
 }
 
+
 export const TextArea = (props) => {
   const min = props.min || 10;
   const max = props.max || 500;
-  const tip = `text (min:${min},max:${max})..`;
+  const placeholder = `text (min:${min},max:${max})..`;
   return (
     <label>
       {props.label}
       <br/>
         <textarea rows={5} cols={40} wrap="soft" spellCheck="true"
-          placeholder={tip}
+          placeholder={placeholder}
           minLength={min} maxLength={max}
           defaultValue={props.value}
           onKeyDown={(e) => {if(e.keyCode == 13){props.onChange(e.target.value)}}}
