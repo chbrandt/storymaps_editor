@@ -22,27 +22,6 @@ export class Story extends React.Component {
     }
   }
 
-  handlePlanetSelect = (body) => {
-    console.log(`Story-Planet changed: ${body}`);
-    const basemap = basemaps[body]
-    this.setState({body, basemap});
-  }
-
-  handleIntroChange = (value) => {
-    console.log(`Story-Intro changed: ${value}`);
-    this.setState({intro: value})
-  }
-
-  handleTitleChange = (value) => {
-    console.log(`Story-Title changed: ${value}`);
-    this.setState({title: value})
-  }
-
-  handleChaptersChange = (value) => {
-    console.log(`Story-Chapters changed: ${value}`);
-    this.setState({chapters: value})
-  }
-
   handleChange = (field, value) => {
     console.log(`[Story] ${field}:${value}`);
 
