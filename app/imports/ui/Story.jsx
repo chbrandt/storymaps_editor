@@ -42,6 +42,7 @@ export class Story extends React.Component {
   }
 
   downloadStory = () => {
+    //TODO: eventually, make a package (zip) with json+media in it.
     const story = this.state;
     // It's a JSON; nevertheless, a text file.
     // Use '.txt' to simplify users reading (recognized by any system)

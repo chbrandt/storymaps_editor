@@ -39,12 +39,6 @@ export const ChapterText = (props) => {
 /*
   MEDIA
 */
-const Thumbnail = (props) => {
-  return (
-    <img width="100px" height="100px" src={props.media.src} />
-  )
-}
-
 export class ChapterMedia extends React.Component {
   constructor(props) {
     super(props);
@@ -58,7 +52,7 @@ export class ChapterMedia extends React.Component {
     console.log(`SRC: ${src}`);
     // the file(s) in 'fileInput' reference are guaranteed to be defined
     // since 'FileLoad' is defined when 'fileInput.current' is selected ('SelectFile')
-    const file = this.fileInput.current.files.item(0);
+    // const file = this.fileInput.current.files.item(0);
     this.setState({
       media : { src }
     })
@@ -68,10 +62,17 @@ export class ChapterMedia extends React.Component {
     const file = this.fileInput.current.files.item(0);
     console.log(`Filename (${file.type}): ${file.name} (${Number(file.size/1024).toFixed(1)} KB)`)
 
+    this.handleChange(file.name);
+
     // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications#Example_Showing_thumbnails_of_user-selected_images
     const reader = new FileReader();
     reader.onload = this.onFileLoad
     reader.readAsDataURL(file);
+  }
+
+  handleChange = (value) => {
+    // For the time being, 'value' is the filename
+    this.props.onChange(this.props.name, value);
   }
 
   render() {
@@ -90,7 +91,10 @@ export class ChapterMedia extends React.Component {
                ref={this.fileInput}
                onInput={this.handleSelectFile}
         />
-        {this.state.media ? <Thumbnail media={this.state.media}/> : null}
+        {this.state.media
+          ? <img width="100px" height="100px" src={this.state.media.src}/>
+          : null
+        }
       </label>
     );
   }
@@ -125,6 +129,11 @@ export const ChapterLayers = (props) => {
   VIEW
 */
 export class ChapterView extends React.Component {
+  //TODO: adjust synchronization between data validation and component state
+  //      This component will commit changes (to parent component, 'Chapter')
+  //      only if the state ('view') is valid. Which is the right behaviour.
+  //      What could be done better is to sync this validation with the actual
+  //      value being shown by the (<input>) element, like we do in <StoryTitle>.
   constructor(props) {
     super(props);
     this.state = props.view;
