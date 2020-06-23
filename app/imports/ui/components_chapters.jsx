@@ -104,6 +104,9 @@ export class ChapterMedia extends React.Component {
   LAYERS
 */
 export const ChapterLayers = (props) => {
+  const handleChange = (e) => {
+    props.onChange(props.name, e.target.value);
+  }
   return (
     <label>
       Chapter layer:
@@ -112,8 +115,8 @@ export const ChapterLayers = (props) => {
       */}
       <input type="text" placeholder="https://geo.example.org/wms/..."
              key="chapter_layer" name="chapter_layer"
-             onKeyDown={props.handlePressEnter}
-             onBlur={props.handleLoseFocus}
+             onKeyDown={(e) => {if(e.keyCode == 13){handleChange(e)}}}
+             onBlur={(e) => {handleChange(e)}}
              list="example_base_URLs"
       />
       <datalist id="example_base_URLs">
