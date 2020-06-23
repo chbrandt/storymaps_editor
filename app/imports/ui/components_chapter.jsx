@@ -2,21 +2,24 @@ import React from 'react';
 
 import { InputText } from './components_base.jsx';
 import { InputNumber } from './components_base.jsx';
+import { InputSelect } from './components_base.jsx';
 import { TextArea } from './components_base.jsx';
 
 import { validBounds } from '../api/utils.js';
+
+import { toList } from './components_collections.jsx';
 
 /*
   TITLE
 */
 export const ChapterTitle = (props) => {
   handleChange = (value) => {
-    props.onChange(props.name, value);
+    props.onChange(value);
   }
   return (
     <InputText label="Chapter title"
-              value={props.title}
-              onChange={handleChange}
+                value={props.value}
+                onChange={handleChange}
     />
   );
 }
@@ -26,79 +29,16 @@ export const ChapterTitle = (props) => {
 */
 export const ChapterText = (props) => {
   handleChange = (value) => {
-    props.onChange(props.name, value);
+    props.onChange(value);
   }
   return (
     <TextArea label="Chapter text" min={10} max={400}
-              value={props.text}
+              value={props.value}
               onChange={handleChange}
     />
   );
 }
 
-/*
-  MEDIA
-*/
-export class ChapterMedia extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      items: []
-    }
-
-    this.new_item = {}
-  }
-
-  handleAdd = (e) => {
-    e.preventDefault();
-
-    const items = [...this.state.items, this.new_item];
-    this.setState({items});
-  }
-
-  handleChange = (index, value) => {
-    console.log(index, value);
-
-    let items = this.state.items;
-    items[index] = value;
-
-    /*
-      Component 'state' -- {items} -- is not really playing a role here (so far),
-      we may want to use it to have a layer of internal validation before
-      pushing data to parent component.
-      In this component, for example, we could have a check on all items on the
-      list before pushing it (to parent component).
-      Currently, we trust the children components (media) and this component is
-      just making sure that (only) the element that was updated/changed is being
-      replaced in the list of items.
-      An so, this component 'state' works just as a quick buffer before pushing
-      to parent and between getting it (back) from parent and instantiating the
-      children.
-      */
-    this.setState({items});
-
-    /*
-      Instead, we are just pushing it to Parent.
-      */
-    console.log(`ITEMS: ${items}`);
-    this.props.onChange(this.props.name, items);
-  }
-
-  render() {
-    const items = this.state.items;
-    return (
-      <div>
-        <button onClick={this.handleAdd}>Add media</button>
-        {items.map((item,i) => <ChapterImage key={i.toString()}
-                                              index={i.toString()}
-                                              value={item}
-                                              onChange={this.handleChange}/>
-        )}
-      </div>
-    );
-  }
-}
 
 /*
   MEDIA-IMAGE
@@ -137,7 +77,7 @@ export class ChapterImage extends React.Component {
 
   handleChange = (value) => {
     // For the time being, 'value' is the filename
-    this.props.onChange(this.props.index, value);
+    this.props.onChange(value);
   }
 
   render() {
@@ -168,29 +108,14 @@ export class ChapterImage extends React.Component {
 /*
   LAYERS
 */
-export const ChapterLayers = (props) => {
+const ChapterLayer = (props) => {
+
   const handleChange = (e) => {
-    console.log(`[ChapterLayers] ${e}`);
-    props.onChange(props.name, e.target.value);
+    props.onChange(e.target.value);
   }
+
   return (
-    <label>
-      Chapter layer:
-      {/*
-        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url
-      */}
-      <input type="text" placeholder="https://geo.example.org/wms/..."
-             key="chapter_layer" name="chapter_layer"
-             onKeyDown={(e) => {if(e.keyCode == 13){handleChange(e)}}}
-             onBlur={(e) => {handleChange(e)}}
-             list="example_base_URLs"
-      />
-      <datalist id="example_base_URLs">
-        <option value="https://geoserver.planmap.eu/wms/"/>
-        <option value="https://geoserver.planmap.eu/wfs/"/>
-        <option value="https://bla.server.net/w?s" label="W*S dummy"/>
-      </datalist>
-    </label>
+    <InputSelect label="Chapter layer" placeholder="https://geo.example.org/wms/..." />
   );
 }
 
@@ -215,7 +140,7 @@ export class ChapterView extends React.Component {
     let view = {...this.state, [axis]: {...this.state[axis], [limit]: value}};
     if (validBounds(view)) {
       this.setState(view);
-      this.props.onChange(this.props.name, view);
+      this.props.onChange(view);
     }
   }
 
@@ -248,3 +173,17 @@ export class ChapterView extends React.Component {
     );
   }
 }
+
+/*
+List MEDIA
+- 'ChapterMedia' -- the List -- get 'onChange' property for a "callback(items)".
+- 'ChapterImage' -- the items -- get 'value' and 'onChange(value)' properties.
+*/
+export const ChapterMedia = toList(ChapterImage);
+
+/*
+List LAYERS
+- 'ChapterLayers' -- the List -- get 'onChange' property for a "callback(items)".
+- 'ChapterLayer' -- the items -- get 'value' and 'onChange(value)' properties.
+*/
+export const ChapterLayers = toList(ChapterLayer);

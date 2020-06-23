@@ -61,8 +61,8 @@ export const StoryIntro = (props) => {
 */
 export const StoryPlanet = (props) => {
   return (
-    <Select name="planets" placeholder="Select a planet/body"
-            bodies={props.bodies}
+    <Select label="planets" placeholder="Select a planet/body"
+            items={props.bodies}
             onChange={props.onChange}
     />
   );
