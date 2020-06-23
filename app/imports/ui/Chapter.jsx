@@ -6,14 +6,15 @@ import { ChapterView } from './components_chapter.jsx';
 import { ChapterLayers } from './components_chapter.jsx';
 import { ChapterMedia } from './components_chapter.jsx';
 
-import { chapter as chapter_template } from '../api/templates.js';
+import { stringify } from '../api/utils.js';
 
+import { chapter as CHAPTER_TEMPLATE } from '../api/templates.js';
 
 
 export class Chapter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props.value || chapter_template;
+    this.state = props.value || CHAPTER_TEMPLATE;
   }
 
   handleChange = (field, value) => {
@@ -28,15 +29,16 @@ export class Chapter extends React.Component {
       as an internal validator while the fields are being field, and push
       them all to Parent when 'submit'/'save'.
       */
-    // this.setState(state);
+    this.setState(state);
 
     /*
       Instead, we are just pushing it to Parent.
       */
-    this.props.onChange(this.props.index, state);
+    this.props.onChange(state);
   }
 
   render() {
+    console.log(`Chapter: ${stringify(this.state)}`);
     return (
       <div>
         <ChapterTitle title={this.state.title}

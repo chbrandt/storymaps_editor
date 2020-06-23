@@ -5,6 +5,7 @@ import { Map as MapCanvas } from './Map.jsx';
 
 import { downloadText as download } from '../api/fileIO.js';
 import { stringify } from '../api/utils.js';
+
 // import { story as story_template } from '../api/templates.js';
 
 const BASEMAPS = {mars:"url-mars",moon:"url-moon"};
@@ -91,8 +92,8 @@ export class Story extends React.Component {
         </div>
 
         <div id="story-body">
-          <StoryChapters chapters={this.state.chapters}
-            onChange={this.handleChaptersChange}
+          <StoryChapters value={this.state.chapters}
+                          onChange={(value) => this.handleChange("chapters", value)}
           />
         </div>
 
