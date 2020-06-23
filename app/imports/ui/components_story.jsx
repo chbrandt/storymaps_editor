@@ -81,7 +81,6 @@ export class StoryChapters extends React.Component {
 
   handleCreate = (e) => {
     e.preventDefault();
-    //TODO: parent components should get the 'value' only, not 'event'
     this.setState({chapters: [...this.state.chapters, {}]})
   }
 

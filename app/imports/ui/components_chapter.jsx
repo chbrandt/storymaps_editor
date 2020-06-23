@@ -42,14 +42,79 @@ export const ChapterText = (props) => {
 export class ChapterMedia extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      items: []
+    }
+
+    this.new_item = {}
+  }
+
+  handleAdd = (e) => {
+    e.preventDefault();
+
+    const items = [...this.state.items, this.new_item];
+    this.setState({items});
+  }
+
+  handleChange = (index, value) => {
+    console.log(index, value);
+
+    let items = this.state.items;
+    items[index] = value;
+
+    /*
+      Component 'state' -- {items} -- is not really playing a role here (so far),
+      we may want to use it to have a layer of internal validation before
+      pushing data to parent component.
+      In this component, for example, we could have a check on all items on the
+      list before pushing it (to parent component).
+      Currently, we trust the children components (media) and this component is
+      just making sure that (only) the element that was updated/changed is being
+      replaced in the list of items.
+      An so, this component 'state' works just as a quick buffer before pushing
+      to parent and between getting it (back) from parent and instantiating the
+      children.
+      */
+    this.setState({items});
+
+    /*
+      Instead, we are just pushing it to Parent.
+      */
+    console.log(`ITEMS: ${items}`);
+    this.props.onChange(this.props.name, items);
+  }
+
+  render() {
+    const items = this.state.items;
+    return (
+      <div>
+        <button onClick={this.handleAdd}>Add media</button>
+        {items.map((item,i) => <ChapterImage key={i.toString()}
+                                              index={i.toString()}
+                                              value={item}
+                                              onChange={this.handleChange}/>
+        )}
+      </div>
+    );
+  }
+}
+
+/*
+  MEDIA-IMAGE
+*/
+export class ChapterImage extends React.Component {
+  constructor(props) {
+    super(props);
     // https://reactjs.org/docs/refs-and-the-dom.html
     this.fileInput = React.createRef();
-    this.state = {};
+    this.state = {
+    };
   }
 
   onFileLoad = (e) => {
     const src = e.target.result;
-    console.log(`SRC: ${src}`);
+    // console.log(`SRC: ${src}`);
     // the file(s) in 'fileInput' reference are guaranteed to be defined
     // since 'FileLoad' is defined when 'fileInput.current' is selected ('SelectFile')
     // const file = this.fileInput.current.files.item(0);
@@ -72,7 +137,7 @@ export class ChapterMedia extends React.Component {
 
   handleChange = (value) => {
     // For the time being, 'value' is the filename
-    this.props.onChange(this.props.name, value);
+    this.props.onChange(this.props.index, value);
   }
 
   render() {
@@ -105,6 +170,7 @@ export class ChapterMedia extends React.Component {
 */
 export const ChapterLayers = (props) => {
   const handleChange = (e) => {
+    console.log(`[ChapterLayers] ${e}`);
     props.onChange(props.name, e.target.value);
   }
   return (
@@ -143,6 +209,8 @@ export class ChapterView extends React.Component {
   }
 
   handleChange = (name, value) => {
+    console.log(`[ChapterView] ${name}:${value}`);
+
     const [axis,limit] = name.split("/")
     let view = {...this.state, [axis]: {...this.state[axis], [limit]: value}};
     if (validBounds(view)) {

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { ChapterTitle } from './components_chapters.jsx';
-import { ChapterText } from './components_chapters.jsx';
-import { ChapterMedia } from './components_chapters.jsx';
-import { ChapterView } from './components_chapters.jsx';
-import { ChapterLayers } from './components_chapters.jsx';
+import { ChapterTitle } from './components_chapter.jsx';
+import { ChapterText } from './components_chapter.jsx';
+import { ChapterView } from './components_chapter.jsx';
+import { ChapterLayers } from './components_chapter.jsx';
+import { ChapterMedia } from './components_chapter.jsx';
 
 import { chapter as chapter_template } from '../api/templates.js';
 
@@ -13,7 +13,7 @@ import { chapter as chapter_template } from '../api/templates.js';
 export class Chapter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = Object.keys(props.value).length == 0 ? chapter_template : props.value;
+    this.state = Object.keys(props.value).length !== 0 ? props.value : chapter_template;
   }
 
   // updateView(view) {
@@ -55,9 +55,22 @@ export class Chapter extends React.Component {
   // }
 
   handleChange = (field, value) => {
-    console.log(`Field '${field}' changed: ${JSON.stringify(value)}`);
+    console.log(`[Chapter] ${field}:${value}`);
+
     const state = Object.assign({}, this.state, {[field]: value});
-    this.setState(state);
+    /*
+      Component 'state' here is not really playing a role,
+      we may want to use it to have a layer of internal validation before
+      pushing data to parent component.
+      If this was a form, for example, we could have the 'setState(state)'
+      as an internal validator while the fields are being field, and push
+      them all to Parent when 'submit'/'save'.
+      */
+    // this.setState(state);
+
+    /*
+      Instead, we are just pushing it to Parent.
+      */
     this.props.onChange(this.props.index, state);
   }
 
