@@ -19,6 +19,8 @@ export class Chapter extends React.Component {
 
   handleChange = (field, value) => {
     console.log(`[Chapter] ${field}:${value}`);
+    console.assert(this.state.hasOwnProperty(field),
+                    `Chapter has no '${field}' data field`);
 
     const state = Object.assign({}, this.state, {[field]: value});
     /*
@@ -41,29 +43,24 @@ export class Chapter extends React.Component {
     console.log(`Chapter: ${stringify(this.state)}`);
     return (
       <div>
-        <ChapterTitle title={this.state.title}
-                      name="title"
+        <ChapterTitle value={this.state.title}
                       onChange={(value) => this.handleChange("title", value)}
         />
         <br/>
-        <ChapterText text={this.state.text}
-                      name="text"
+        <ChapterText value={this.state.text}
                       onChange={(value) => this.handleChange("text", value)}
         />
         <br/>
-        <ChapterView view={this.state.view}
-                      name="view"
+        <ChapterView value={this.state.view}
                       onChange={(value) => this.handleChange("view", value)}
         />
         <br/>
         <ChapterMedia value={this.state.media}
-                      name="media"
                       label="Media:"
                       onChange={(value) => this.handleChange("media", value)}
         />
         <br/>
         <ChapterLayers value={this.state.layers}
-                        name="layers"
                         label="Layers:"
                         onChange={(value) => this.handleChange("layers", value)}
         />

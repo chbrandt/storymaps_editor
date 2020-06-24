@@ -24,29 +24,23 @@ export const StoryChapters = toList(Chapter);
   TITLE
 */
 export const StoryTitle = (props) => <InputText label="Story title"
-                                                name="title"
-                                                value={props.title}
-                                                onChange={
-                                                  (value) => props.onChange("title", value)}
+                                                value={props.value}
+                                                onChange={props.onChange}
                                                 />
 
 /*
   INTRO
 */
 export const StoryIntro = (props) => <TextArea label="Story intro"
-                                                name="intro"
-                                                value={props.title}
-                                                onChange={
-                                                  (value) => props.onChange("intro", value)}
+                                                value={props.value}
+                                                onChange={props.onChange}
                                                 />
 
 /*
   PLANET
 */
-export const StoryPlanet = (props) => <Select label="planets"
+export const StoryPlanet = (props) => <Select label="Bodies"
                                               placeholder="Select a planet/body"
-                                              name="body"
-                                              items={props.bodies}
-                                              onChange={
-                                                (value) => props.onChange("body", value)}
+                                              value={props.value}
+                                              onChange={props.onChange}
                                               />

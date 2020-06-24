@@ -5,25 +5,21 @@ import { Map as MapCanvas } from './Map.jsx';
 
 import { downloadText as download } from '../api/fileIO.js';
 import { stringify } from '../api/utils.js';
-
-// import { story as story_template } from '../api/templates.js';
+import { story as STORY_TEMPLATE } from '../api/templates.js';
 
 const BASEMAPS = {mars:"url-mars",moon:"url-moon"};
+
 
 export class Story extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: "",
-      intro: "",
-      body: "",
-      basemap: "",
-      chapters: []
-    }
+    this.state = props.value || STORY_TEMPLATE;
   }
 
   handleChange = (field, value) => {
     console.log(`[Story] ${field}:${value}`);
+    console.assert(this.state.hasOwnProperty(field),
+                    `Story has no '${field}' data field`);
 
     const state = Object.assign({}, this.state, {[field]: value});
     /*
@@ -65,9 +61,17 @@ export class Story extends React.Component {
         <button onClick={this.downloadStory}>Download Story</button>
 
         <div id="story-header">
-          <StoryTitle onChange={this.handleChange}/>
-          <StoryPlanet onChange={this.handleChange} bodies={Object.keys(BASEMAPS)}/>
-          <StoryIntro onChange={this.handleChange}/>
+          <StoryTitle value={this.state.title}
+                      onChange={(value) => this.handleChange("title", value)}
+          />
+          <br/>
+          <StoryPlanet value={Object.keys(BASEMAPS)}
+                        onChange={(value) => this.handleChange("bodies", value)}
+          />
+          <br/>
+          <StoryIntro value={this.state.intro}
+                      onChange={(value) => this.handleChange("bodies", value)}
+          />
         </div>
 
         <div id="story-body">
@@ -76,8 +80,8 @@ export class Story extends React.Component {
           />
         </div>
 
-        <div id="story-canvas">
-          <MapCanvas body={this.state.planet}/>
+        <div id="story-map">
+          <MapCanvas body={this.state.body}/>
         </div>
       </div>
     );

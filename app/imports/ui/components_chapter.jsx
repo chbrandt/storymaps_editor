@@ -11,31 +11,18 @@ import { toList } from './components_collections.jsx';
 
 
 /* TITLE */
-export const ChapterTitle = (props) => {
-  handleChange = (value) => {
-    props.onChange(value);
-  }
-  return (
-    <InputText label="Chapter title"
-                value={props.value}
-                onChange={handleChange}
-    />
-  );
-}
+export const ChapterTitle = (props) => <InputText label="Chapter title"
+                                                  value={props.value}
+                                                  onChange={props.onChange}
+                                        />
 
 
 /* TEXT */
-export const ChapterText = (props) => {
-  handleChange = (value) => {
-    props.onChange(value);
-  }
-  return (
-    <TextArea label="Chapter text" min={10} max={400}
-              value={props.value}
-              onChange={handleChange}
-    />
-  );
-}
+export const ChapterText = (props) => <TextArea label="Chapter text"
+                                                min={10} max={400}
+                                                value={props.value}
+                                                onChange={props.onChange}
+                                      />
 
 
 /* IMAGE */
@@ -44,8 +31,7 @@ export class ChapterImage extends React.Component {
     super(props);
     // https://reactjs.org/docs/refs-and-the-dom.html
     this.fileInput = React.createRef();
-    this.state = {
-    };
+    this.state = props.value;
   }
 
   onFileLoad = (e) => {
@@ -103,14 +89,10 @@ export class ChapterImage extends React.Component {
 
 
 /* LAYERS */
-const ChapterLayer = (props) => {
-  const handleChange = (e) => {
-    props.onChange(e.target.value);
-  }
-  return (
-    <InputSelect label="Chapter layer" placeholder="https://geo.example.org/wms/..." />
-  );
-}
+const ChapterLayer = (props) => <InputSelect label="Chapter layer"
+                                              placeholder="https://geo.example.org/wms/..."
+                                              onChange={props.onChange}
+                                />
 
 
 /* VIEW */
@@ -122,7 +104,7 @@ export class ChapterView extends React.Component {
   //      value being shown by the (<input>) element, like we do in <StoryTitle>.
   constructor(props) {
     super(props);
-    this.state = props.view;
+    this.state = props.value;
   }
 
   handleChange = (name, value) => {
@@ -141,6 +123,7 @@ export class ChapterView extends React.Component {
       <label>
         {this.props.label}
         <br/>
+        {/*TODO: make two components for coordinates (lat,lon) input*/}
         <InputNumber min={-180} max={+180}
           label="lon/min"
           value={this.state.lon.min}
@@ -151,6 +134,7 @@ export class ChapterView extends React.Component {
           value={this.state.lon.max}
           onChange={(value) => this.handleChange("lon/max", value)}
         />
+        {/*TODO: make two components for coordinates (lat,lon) input*/}
         <InputNumber min={-90} max={+90}
           label="lat/min"
           value={this.state.lat.min}

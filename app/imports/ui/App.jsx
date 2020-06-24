@@ -11,6 +11,9 @@ export class App extends React.Component {
   }
 
   createStory = (label) => {
+    //TODO: make 'label' a 'state' parameter.
+    //TODO: bring 'download-story' action to here.
+    //TODO: don't pass 'label' to Story (the Story holds the content only).
     console.log(`Creating story '${label}'`);
     this.setState({story: <Story label={label}/>});
   }
@@ -23,7 +26,7 @@ export class App extends React.Component {
   render() {
     const story = this.state.story;
     return (
-      <div>
+      <div id="app">
         <h1>Storymaps editor</h1>
         {
           !story
