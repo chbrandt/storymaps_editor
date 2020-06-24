@@ -6,7 +6,8 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      story: null
+      story: null,
+      label: null
     }
   }
 
@@ -15,7 +16,10 @@ export class App extends React.Component {
     //TODO: bring 'download-story' action to here.
     //TODO: don't pass 'label' to Story (the Story holds the content only).
     console.log(`Creating story '${label}'`);
-    this.setState({story: <Story label={label}/>});
+    this.setState({
+      story: <Story label={label}/>,
+      label: label
+    });
   }
 
   deleteStory = () => {
@@ -34,6 +38,7 @@ export class App extends React.Component {
               Create Story
             </CreateStoryForm>
           : <div>
+              <h2>"{this.state.label}"</h2>
               <button onClick={this.deleteStory}>Delete Story</button>
               {story}
             </div>

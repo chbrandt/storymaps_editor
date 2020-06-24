@@ -66,11 +66,11 @@ export class Story extends React.Component {
           />
           <br/>
           <StoryPlanet value={Object.keys(BASEMAPS)}
-                        onChange={(value) => this.handleChange("bodies", value)}
+                        onChange={(value) => this.handleChange("body", value)}
           />
           <br/>
           <StoryIntro value={this.state.intro}
-                      onChange={(value) => this.handleChange("bodies", value)}
+                      onChange={(value) => this.handleChange("intro", value)}
           />
         </div>
 

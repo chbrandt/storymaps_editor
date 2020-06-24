@@ -41,7 +41,8 @@ export class ChapterImage extends React.Component {
     // since 'FileLoad' is defined when 'fileInput.current' is selected ('SelectFile')
     // const file = this.fileInput.current.files.item(0);
     this.setState({
-      media : { src }
+      // media : { src }
+      media: src
     })
   }
 
@@ -78,8 +79,8 @@ export class ChapterImage extends React.Component {
                ref={this.fileInput}
                onInput={this.handleSelectFile}
         />
-        {this.state.media
-          ? <img width="100px" height="100px" src={this.state.media.src}/>
+        {this.state && this.state.media
+          ? <img width="100px" height="100px" src={this.state.media}/>
           : null
         }
       </label>

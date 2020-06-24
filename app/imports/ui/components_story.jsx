@@ -41,6 +41,6 @@ export const StoryIntro = (props) => <TextArea label="Story intro"
 */
 export const StoryPlanet = (props) => <Select label="Bodies"
                                               placeholder="Select a planet/body"
-                                              value={props.value}
+                                              items={props.value}
                                               onChange={props.onChange}
                                               />

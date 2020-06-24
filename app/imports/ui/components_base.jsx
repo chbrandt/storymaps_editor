@@ -39,7 +39,7 @@ export const InputSelect = (props) => {
   const placeholder = props.placeholder || "";
   return (
     <label>
-      {this.props.label}
+      {props.label}
       <input type="text" placeholder={placeholder}
              onKeyDown={(e) => {if(e.keyCode == 13){handleChange(e)}}}
              onBlur={(e) => {handleChange(e)}}
