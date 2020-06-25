@@ -77,12 +77,13 @@ export function toList(ItemComponent) {
             <label>
               {this.props.label}
               {items.map((item,i) => {
+                const index = i.toString();
                 return (
-                  <div key={i.toString()}>
+                  <div key={JSON.stringify(item)}>
                     <ItemComponent value={item}
-                                    onChange={(value) => this.handleChange(i, value)}
+                                    onChange={(value) => this.handleChange(index, value)}
                     />
-                    <button onClick={() => this.handleDelete(i)}>"Delete"</button>
+                    <button onClick={() => this.handleDelete(index)}>"Delete"</button>
                   </div>
                 );
               })}

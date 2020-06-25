@@ -31,7 +31,7 @@ export class ChapterImage extends React.Component {
     super(props);
     // https://reactjs.org/docs/refs-and-the-dom.html
     this.fileInput = React.createRef();
-    this.state = props.value;
+    // this.state = props.value;
   }
 
   onFileLoad = (e) => {
