@@ -55,12 +55,12 @@ export class Chapter extends React.Component {
                       onChange={(value) => this.handleChange("view", value)}
         />
         <br/>
-        <ChapterMedia value={this.state.media}
+        <ChapterMedia items={this.state.media}
                       label="Media:"
                       onChange={(value) => this.handleChange("media", value)}
         />
         <br/>
-        <ChapterLayers value={this.state.layers}
+        <ChapterLayers items={this.state.layers}
                         label="Layers:"
                         onChange={(value) => this.handleChange("layers", value)}
         />

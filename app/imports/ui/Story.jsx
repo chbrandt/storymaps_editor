@@ -47,7 +47,6 @@ export class Story extends React.Component {
 
   downloadStory = () => {
     //TODO: implement a make-a-package (zip) function with (json + media) in it.
-
     const story = this.state;
     const filext = "txt"
     const filename = `${this.props.label}.${filext}`;
@@ -75,7 +74,7 @@ export class Story extends React.Component {
         </div>
 
         <div id="story-body">
-          <StoryChapters value={this.state.chapters}
+          <StoryChapters items={this.state.chapters}
                           onChange={(value) => this.handleChange("chapters", value)}
           />
         </div>

@@ -22,23 +22,28 @@ export function toList(ItemComponent) {
       */
       constructor(props) {
         super(props);
-        this.state = {
-          items: []
-        };
-        // this.new_item = {} // this is just a placeholder for new items, will be subtituted.
-        this.new_item = undefined; // placeholder/template for new items.
+        /*
+        Properties:
+        - items: []
+        - new_item: new_item || null
+        */
       }
 
-      handleAdd = (e) => {
-        e.preventDefault();
-        const items = [...this.state.items, this.new_item];
-        this.setState({items});
+      handleCreate = () => {
+        const items = [...this.props.items, undefined];
+        this.props.onChange(items);
+      }
+
+      handleDelete = (index) => {
+        let items = this.props.items;
+        const _ = items.splice(index, 1);
+        this.props.onChange(items);
       }
 
       handleChange = (index, value) => {
         console.log(index, value);
 
-        let items = this.state.items;
+        let items = this.props.items;
         items[index] = value;
 
         /*
@@ -54,7 +59,7 @@ export function toList(ItemComponent) {
           to parent and between getting it (back) from parent and instantiating the
           children.
           */
-        this.setState({items});
+        // this.setState({items});
 
         /*
           And we are (also) pushing it to Parent.
@@ -63,20 +68,22 @@ export function toList(ItemComponent) {
       }
 
       render() {
-        const items = this.state.items;
-        const button = this.props.button || "Add";
+        const props = this.props;
+        const items = props.items;
+        const button = props.button || "Add";
         return (
           <div>
-            <button onClick={this.handleAdd}>{button}</button>
+            <button onClick={this.handleCreate}>{button}</button>
             <label>
               {this.props.label}
               {items.map((item,i) => {
-                const index = i.toString();
                 return (
-                  <ItemComponent key={index}
-                                  value={item}
-                                  onChange={(value) => this.handleChange(index, value)}
-                  />
+                  <div key={i.toString()}>
+                    <ItemComponent value={item}
+                                    onChange={(value) => this.handleChange(i, value)}
+                    />
+                    <button onClick={() => this.handleDelete(i)}>"Delete"</button>
+                  </div>
                 );
               })}
             </label>
