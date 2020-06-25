@@ -70,6 +70,7 @@ export function toList(ItemComponent) {
       render() {
         const props = this.props;
         const items = props.items;
+        const active = props.active;
         const button = props.button || "Add";
         return (
           <div>
@@ -78,14 +79,16 @@ export function toList(ItemComponent) {
               {this.props.label}
               {items.map((item,i) => {
                 const index = i.toString();
-                return (
-                  <div key={item ? JSON.stringify(item) : ""}>
-                    <ItemComponent value={item}
-                                    onChange={(value) => this.handleChange(index, value)}
-                    />
-                    <button onClick={() => this.handleDelete(index)}>"Delete"</button>
-                  </div>
-                );
+                if (!active || active == i) {
+                  return (
+                    <div key={item ? JSON.stringify(item) : ""}>
+                      <ItemComponent value={item}
+                                      onChange={(value) => this.handleChange(index, value)}
+                      />
+                      <button onClick={() => this.handleDelete(index)}>"Delete"</button>
+                    </div>
+                  );
+                }
               })}
             </label>
           </div>
