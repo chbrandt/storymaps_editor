@@ -79,7 +79,7 @@ export function toList(ItemComponent) {
               {items.map((item,i) => {
                 const index = i.toString();
                 return (
-                  <div key={JSON.stringify(item)}>
+                  <div key={item ? JSON.stringify(item) : ""}>
                     <ItemComponent value={item}
                                     onChange={(value) => this.handleChange(index, value)}
                     />

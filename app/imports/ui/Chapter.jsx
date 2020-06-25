@@ -1,12 +1,12 @@
 import React from 'react';
 
+import { stringify } from '../api/utils.js';
+
 import { ChapterTitle } from './components_chapter.jsx';
 import { ChapterText } from './components_chapter.jsx';
 import { ChapterView } from './components_chapter.jsx';
 import { ChapterLayers } from './components_chapter.jsx';
 import { ChapterMedia } from './components_chapter.jsx';
-
-import { stringify } from '../api/utils.js';
 
 import { chapter as CHAPTER_TEMPLATE } from '../api/templates.js';
 
@@ -56,12 +56,10 @@ export class Chapter extends React.Component {
         />
         <br/>
         <ChapterMedia items={this.state.media}
-                      label="Media:"
                       onChange={(value) => this.handleChange("media", value)}
         />
         <br/>
         <ChapterLayers items={this.state.layers}
-                        label="Layers:"
                         onChange={(value) => this.handleChange("layers", value)}
         />
       </div>
