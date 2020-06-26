@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { stringify } from '../api/utils.js';
+
 export function toList(ItemComponent) {
   return (
     class ItemsList extends React.Component {
@@ -68,6 +70,7 @@ export function toList(ItemComponent) {
       }
 
       render() {
+        console.log(`ItemsList (${stringify(this.props.label)}) (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
         const props = this.props;
         const items = props.items;
         const active = props.active;

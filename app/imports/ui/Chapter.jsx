@@ -40,7 +40,7 @@ export class Chapter extends React.Component {
   }
 
   render() {
-    console.log(`Chapter: ${stringify(this.state)}`);
+    console.log(`Chapter (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
     return (
       <div>
         <ChapterTitle value={this.state.title}
@@ -56,10 +56,12 @@ export class Chapter extends React.Component {
         />
         <br/>
         <ChapterMedia items={this.state.media}
+                      label="Media list"
                       onChange={(value) => this.handleChange("media", value)}
         />
         <br/>
         <ChapterLayers items={this.state.layers}
+                        label="Layers list"
                         onChange={(value) => this.handleChange("layers", value)}
         />
       </div>

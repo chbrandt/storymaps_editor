@@ -54,7 +54,7 @@ export class Story extends React.Component {
   }
 
   render() {
-    console.log(`Story: ${stringify(this.state)}`);
+    console.log(`Story (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
     return (
       <div id="story">
         <button onClick={this.downloadStory}>Download Story</button>
@@ -75,6 +75,8 @@ export class Story extends React.Component {
 
         <div id="story-body">
           <StoryChapters items={this.state.chapters}
+                          label="Chapters list"
+                          active={0}
                           onChange={(value) => this.handleChange("chapters", value)}
           />
         </div>

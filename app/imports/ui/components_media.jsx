@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { stringify } from '../api/utils.js';
 
 /* IMAGE */
 export class MediaImage extends React.Component {
@@ -20,9 +21,7 @@ export class MediaImage extends React.Component {
   handleSubmit(event) {
     // event.preventDefault();
     const file = this.fileInput.current.files[0];
-    alert(
-      `Selected file - ${file.name}`
-    );
+    console.log(`Selected file - ${file.name}`);
     const src = file ? URL.createObjectURL(file) : null;
     const state = { media: src };
     this.setState(state);
@@ -30,7 +29,7 @@ export class MediaImage extends React.Component {
   }
 
   render() {
-    console.log("MediaImage state", this.state);
+    console.log(`MediaImage: ${stringify(this.state)}`);
     const src = this.state.media;
     return (
       <div>
