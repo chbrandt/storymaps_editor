@@ -82,7 +82,7 @@ export function toList(ItemComponent) {
               {this.props.label}
               {items.map((item,i) => {
                 const index = i.toString();
-                if (!active || active == i) {
+                if (active == null || active == i) {
                   return (
                     <div key={item ? JSON.stringify(item) : ""}>
                       <ItemComponent value={item}

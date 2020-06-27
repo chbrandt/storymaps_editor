@@ -94,6 +94,14 @@ export class Story extends React.Component {
       */
   }
 
+  handleChangeChapters = (value) => {
+    const active_chapter = value.length - 1;
+    this.handleChange("chapters", value);
+    this.handleSelectChapter(active_chapter);
+  }
+  
+  handleSelectChapter = (active_chapter) => this.setState({ active_chapter });
+
   downloadStory = () => {
     //TODO: implement a make-a-package (zip) function with (json + media) in it.
     const story = this.state;
@@ -123,10 +131,15 @@ export class Story extends React.Component {
         </div>
 
         <div id="story-body">
+          {this.state.chapters.length > 0 && <Select items={Object.keys(this.state.chapters)}
+                                                      selected={this.state.active_chapter}
+                                                      onChange={this.handleSelectChapter}
+                                              />
+          }
           <StoryChapters items={this.state.chapters}
                           label="Chapters list"
-                          active={0}
-                          onChange={(value) => this.handleChange("chapters", value)}
+                          active={this.state.active_chapter}
+                          onChange={(value) => this.handleChangeChapters(value)}
           />
         </div>
 
