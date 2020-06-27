@@ -5,7 +5,7 @@ import { InputNumber } from './components_base.jsx';
 import { InputSelect } from './components_base.jsx';
 import { TextArea } from './components_base.jsx';
 
-import { MediaImage } from './components_media';
+import { MediaImage as Media } from './components_media';
 
 import { validBounds } from '../api/utils.js';
 
@@ -17,7 +17,7 @@ List MEDIA
 - 'ChapterMedia' -- the List -- get 'onChange' property for a "callback(items)".
 - 'ChapterImage' -- the items -- get 'value' and 'onChange(value)' properties.
 */
-export const ChapterMedia = toList(MediaImage);
+export const ChapterMedia = toList(Media);
 
 
 /* TITLE */

@@ -1,15 +1,64 @@
 import React from 'react';
 
-import { StoryTitle, StoryIntro, StoryPlanet, StoryChapters } from './components_story.jsx';
-import { Map as MapCanvas } from './Map.jsx';
-
-import { downloadText as download } from '../api/fileIO.js';
 import { stringify } from '../api/utils.js';
+import { downloadText as download } from '../api/fileIO.js';
+
+import { Map } from './Map.jsx';
+import { Chapter } from './Chapter.jsx';
+
+// Base (HTML elements) components
+import { Select } from './components_base.jsx';
+import { TextArea } from './components_base.jsx';
+import { InputText } from './components_base.jsx';
+
+// List HOC
+import { toList } from './components_collections.jsx';
+
+
+// TEMPLATES and CONFIGS
 import { story as STORY_TEMPLATE } from '../api/templates.js';
 
+//TODO: Implement a config object
 const BASEMAPS = {mars:"url-mars",moon:"url-moon"};
 
 
+/*
+  CHAPTERS
+*/
+export const StoryChapters = toList(Chapter);
+
+
+/*
+  TITLE
+*/
+export const StoryTitle = (props) => <InputText label="Story title"
+                                                value={props.value}
+                                                onChange={props.onChange}
+                                                />
+
+
+/*
+  INTRO
+*/
+export const StoryIntro = (props) => <TextArea label="Story intro"
+                                                value={props.value}
+                                                onChange={props.onChange}
+                                                />
+
+
+/*
+  PLANET
+*/
+export const StoryPlanet = (props) => <Select label="Bodies"
+                                              placeholder="Select a planet/body"
+                                              items={props.value}
+                                              onChange={props.onChange}
+                                              />
+
+
+/*
+  STORY-MAP
+*/
 export class Story extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +66,7 @@ export class Story extends React.Component {
   }
 
   handleChange = (field, value) => {
-    console.log(`[Story] ${field}:${value}`);
+    console.log(`[Story] '${field}':${value}`);
     console.assert(this.state.hasOwnProperty(field),
                     `Story has no '${field}' data field`);
 
@@ -54,7 +103,7 @@ export class Story extends React.Component {
   }
 
   render() {
-    console.log(`Story (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
+    console.log(`Story\n (state):\n${stringify(this.state)}\n (procs):\n${stringify(this.props)}`);
     return (
       <div id="story">
         <button onClick={this.downloadStory}>Download Story</button>
@@ -82,7 +131,7 @@ export class Story extends React.Component {
         </div>
 
         <div id="story-map">
-          <MapCanvas body={this.state.body}/>
+          <Map body={this.state.body}/>
         </div>
       </div>
     );
