@@ -49,9 +49,10 @@ export const InputSelect = (props) => {
     <label>
       {props.label}
       <input type="text" placeholder={placeholder}
-             onKeyDown={(e) => {if(e.keyCode == 13){handleChange(e)}}}
-             onBlur={(e) => {handleChange(e)}}
-             list="optional_URLs"
+              defaultValue={props.value}
+              onKeyDown={(e) => {if(e.keyCode == 13){handleChange(e)}}}
+              onBlur={(e) => {handleChange(e)}}
+              list="optional_URLs"
       />
       <datalist id="optional_URLs">
         <option value="https://geoserver.planmap.eu/wms/" label="PLANMAP GeoServer"/>

@@ -5,7 +5,8 @@ import { InputNumber } from './components_base.jsx';
 import { InputSelect } from './components_base.jsx';
 import { TextArea } from './components_base.jsx';
 
-import { MediaImage as Media } from './components_media';
+import { MediaImage as Media } from './components_media.jsx';
+import { Layer } from './components_layer.jsx';
 
 import { validBounds } from '../api/utils.js';
 
@@ -18,6 +19,13 @@ List MEDIA
 - 'ChapterImage' -- the items -- get 'value' and 'onChange(value)' properties.
 */
 export const ChapterMedia = toList(Media);
+
+/*
+List LAYERS
+- 'ChapterLayers' -- the List -- get 'onChange' property for a "callback(items)".
+- 'ChapterLayer' -- the items -- get 'value' and 'onChange(value)' properties.
+*/
+export const ChapterLayers = toList(Layer);
 
 
 /* TITLE */
@@ -33,13 +41,6 @@ export const ChapterText = (props) => <TextArea label="Chapter text"
                                                 value={props.value}
                                                 onChange={props.onChange}
                                       />
-
-
-/* LAYERS */
-const ChapterLayer = (props) => <InputSelect label="Chapter layer"
-                                              placeholder="https://geo.example.org/wms/..."
-                                              onChange={props.onChange}
-                                />
 
 
 /* VIEW */
@@ -96,11 +97,3 @@ export class ChapterView extends React.Component {
     );
   }
 }
-
-
-/*
-List LAYERS
-- 'ChapterLayers' -- the List -- get 'onChange' property for a "callback(items)".
-- 'ChapterLayer' -- the items -- get 'value' and 'onChange(value)' properties.
-*/
-export const ChapterLayers = toList(ChapterLayer);

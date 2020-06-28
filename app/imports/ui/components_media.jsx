@@ -29,7 +29,7 @@ export class MediaImage extends React.Component {
   }
 
   render() {
-    console.log(`MediaImage: ${stringify(this.state)}`);
+    console.log(`MediaImage (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
     const src = this.state.media;
     return (
       <div>
