@@ -1,30 +1,38 @@
 import React from 'react';
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
 
+const Overlay = (props) => {
+  const style = {
+    position:"absolute",
+    zIndex: 9000,
+    top: 0,
+    left: 0,
+    backgroundColor: "rgba(0,0,0,0.25)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+  return (
+    <div style={style} className="leaflet-container">
+      <div style={{margin:"auto", color:"white", textShadow: "1px 1px 2px black"}}>
+        <strong>SELECT A PLANETARY BODY</strong>
+      </div>
+    </div>
+  );
+}
 
 export class Map extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    console.log("PROPS MAP:", this.props);
+    const basemap = this.props.basemap;
     const view = this.props.view || undefined;
     const bounds = view ? view2bounds(view) : [[-30,-60],[30,60]];
-    const position = [53, 8];
-    console.log("VIEW/bounds:",view,bounds);
     return (
-      <LeafletMap bounds={bounds}>
-        <TileLayer
-        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {/* FIXME: Marker not showing out */}
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </LeafletMap>
+      <div style={{position:"relative"}}>
+        <LeafletMap style={{position:"absolute"}} bounds={bounds}>
+          {basemap != null && <TileLayer {...basemap} />}
+        </LeafletMap>
+        {basemap == null && <Overlay />}
+      </div>
     )
   }
 }

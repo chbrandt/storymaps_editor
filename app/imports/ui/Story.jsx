@@ -19,7 +19,18 @@ import { toList } from './components_collections.jsx';
 import { story as STORY_TEMPLATE } from '../api/templates.js';
 
 //TODO: Implement a config object
-const BASEMAPS = {mars:"url-mars",moon:"url-moon"};
+const BASEMAPS = {
+  mars: {
+    attribution: "&amp;<a href='https://www.openplanetary.org/'>OpenPlanetary</a>",
+    url: "http://s3-eu-west-1.amazonaws.com/whereonmars.cartodb.net/mola-color/{z}/{x}/{y}.png",
+    tms: true
+  },
+  moon: {
+    attribution: "&amp;<a href='https://www.openplanetary.org/'>OpenPlanetary</a>",
+    url: "https://s3.amazonaws.com/opmbuilder/301_moon/tiles/w/hillshaded-albedo/{z}/{x}/{y}.png",
+    tms: true
+  }
+};
 
 
 /*
@@ -115,8 +126,11 @@ export class Story extends React.Component {
 
     const active_chapter = this.state.active_chapter;
     const chapters = this.state.chapters;
-    const active_view = active_chapter != null && chapters[active_chapter] != null ? chapters[active_chapter].view : null;
-    console.log("DEBUG CHapters:", chapters, active_chapter, active_view);
+    const active_view = (
+      active_chapter != null && chapters[active_chapter] != null
+      ? chapters[active_chapter].view
+      : null);
+    const body_basemap = BASEMAPS[Object.keys(BASEMAPS)[this.state.body]];
 
     return (
       <div id="story">
@@ -152,7 +166,9 @@ export class Story extends React.Component {
 
         <div id="story-map">
           <Map body={this.state.body}
-                view={active_view}/>
+                view={active_view}
+                basemap={body_basemap}
+          />
         </div>
       </div>
     );
