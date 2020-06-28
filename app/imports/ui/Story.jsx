@@ -106,12 +106,24 @@ export class Story extends React.Component {
   }
 
   handleChangeChapters = (value) => {
-    const active_chapter = value.length - 1;
     this.handleChange("chapters", value);
-    this.handleSelectChapter(active_chapter);
   }
 
   handleSelectChapter = (active_chapter) => this.setState({ active_chapter });
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("DEBUG update (PREV props/state):", prevProps, prevState);
+    console.log("DEBUG update (THIS props/state):", this.props, this.state);
+    if (prevState.chapters.length != this.state.chapters.length) {
+      const active_chapter = this.state.chapters.length - 1;
+      this.setState({active_chapter});
+    } else {
+      if (this.state.active_chapter == this.state.chapters.length){
+        const active_chapter = this.state.chapters.length - 1;
+        this.setState({active_chapter});
+      }
+    }
+  }
 
   downloadStory = () => {
     //TODO: implement a make-a-package (zip) function with (json + media) in it.

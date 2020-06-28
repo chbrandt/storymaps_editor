@@ -16,14 +16,16 @@ export const Select = (props) => {
     }
   }
 
+  const items = props.items;
   const name = props.label || "selector";
-  const placeholder = props.placeholder;
+  const placeholder = props.placeholder || "Options";
   const selected = props.selected;
+  // const selected = Math.max(0, Math.min(props.selected, items.length));
 
   return (
     <select name={name} required value={selected} onChange={handleChange}>
       <option value="">{placeholder}</option>
-      {props.items.map((item,i) => {
+      {items.map((item,i) => {
           console.assert(item != null, "Select items must be non-NULL values/objects");
           // const active = selected != null && selected == i;
           return (
