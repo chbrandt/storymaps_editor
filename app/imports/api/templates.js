@@ -11,7 +11,7 @@ const chapter = {
     title: "",
     text: "",
     view: {
-        lon: {
+        lng: {
             min: -180,
             max: 180
         },

@@ -72,14 +72,14 @@ export class ChapterView extends React.Component {
         <br/>
         {/*TODO: make two components for coordinates (lat,lon) input*/}
         <InputNumber min={-180} max={+180}
-          label="lon/min"
-          value={this.state.lon.min}
-          onChange={(value) => this.handleChange("lon/min", value)}
+          label="lng/min"
+          value={this.state.lng.min}
+          onChange={(value) => this.handleChange("lng/min", value)}
         />
         <InputNumber min={-180} max={+180}
-          label="lon/max"
-          value={this.state.lon.max}
-          onChange={(value) => this.handleChange("lon/max", value)}
+          label="lng/max"
+          value={this.state.lng.max}
+          onChange={(value) => this.handleChange("lng/max", value)}
         />
         {/*TODO: make two components for coordinates (lat,lon) input*/}
         <InputNumber min={-90} max={+90}

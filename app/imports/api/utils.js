@@ -1,23 +1,23 @@
 function validBounds(bounds) {
   /*
-    Return true/false on lat/lon min/max values
+    Return true/false on lat/lng min/max values
 
     Args:
-    - bounds: an objects with lat/lon min/max fields:
+    - bounds: an objects with lat/lng min/max fields:
         * bounds = {
                     lat:{min:<>, max:<>},
-                    lon:{min:<>, max:<>}
+                    lng:{min:<>, max:<>}
                   }
   */
-  const {lat,lon} = {...bounds};
+  const {lat,lng} = {...bounds};
   const checkLat = (val) => {return (-90 <= val && val <= +90)}
   const checkLon = (val) => {return (-180 <= val && val <= +180)}
   if (!(checkLat(lat.min) &&
         checkLat(lat.max) &&
-        checkLon(lon.min) &&
-        checkLon(lon.max))
+        checkLon(lng.min) &&
+        checkLon(lng.max))
       ){return false}
-  return (lat.min < lat.max && lon.min < lon.max);
+  return (lat.min < lat.max && lng.min < lng.max);
 }
 
 function capitalize(string, what) {

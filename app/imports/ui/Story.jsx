@@ -99,7 +99,7 @@ export class Story extends React.Component {
     this.handleChange("chapters", value);
     this.handleSelectChapter(active_chapter);
   }
-  
+
   handleSelectChapter = (active_chapter) => this.setState({ active_chapter });
 
   downloadStory = () => {
@@ -112,6 +112,12 @@ export class Story extends React.Component {
 
   render() {
     console.log(`Story\n (state):\n${stringify(this.state)}\n (procs):\n${stringify(this.props)}`);
+
+    const active_chapter = this.state.active_chapter;
+    const chapters = this.state.chapters;
+    const active_view = active_chapter != null && chapters[active_chapter] != null ? chapters[active_chapter].view : null;
+    console.log("DEBUG CHapters:", chapters, active_chapter, active_view);
+
     return (
       <div id="story">
         <button onClick={this.downloadStory}>Download Story</button>
@@ -131,20 +137,22 @@ export class Story extends React.Component {
         </div>
 
         <div id="story-body">
-          {this.state.chapters.length > 0 && <Select items={Object.keys(this.state.chapters)}
-                                                      selected={this.state.active_chapter}
-                                                      onChange={this.handleSelectChapter}
-                                              />
+          {chapters.length > 0
+            && <Select items={Object.keys(chapters)}
+                        selected={active_chapter}
+                        onChange={this.handleSelectChapter}
+                />
           }
-          <StoryChapters items={this.state.chapters}
+          <StoryChapters items={chapters}
                           label="Chapters list"
-                          active={this.state.active_chapter}
+                          active={active_chapter}
                           onChange={(value) => this.handleChangeChapters(value)}
           />
         </div>
 
         <div id="story-map">
-          <Map body={this.state.body}/>
+          <Map body={this.state.body}
+                view={active_view}/>
         </div>
       </div>
     );
