@@ -70,7 +70,10 @@ export function toList(ItemComponent) {
       }
 
       render() {
-        console.log(`ItemsList\n (state):\n${stringify(this.state)}\n (procs):\n${stringify(this.props)}`);
+        const msg = [`ItemsList [${this.props.label}]`,
+                      `(state):\n${stringify(this.state)}`,
+                      `(procs):\n${stringify(this.props)}`].join('\n');
+        console.log(msg);
         const props = this.props;
         const items = props.items;
         const active = props.active;

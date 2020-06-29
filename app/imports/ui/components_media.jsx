@@ -21,16 +21,17 @@ export class MediaImage extends React.Component {
   handleSubmit(event) {
     // event.preventDefault();
     const file = this.fileInput.current.files[0];
+    const name = file.name;
     console.log(`Selected file - ${file.name}`);
     const src = file ? URL.createObjectURL(file) : null;
-    const state = { media: src };
-    this.setState(state);
-    this.props.onChange(src);
+    const media = {path: name, src: src};
+    this.setState({ media: media });
+    this.props.onChange(media);
   }
 
   render() {
     console.log(`MediaImage (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
-    const src = this.state.media;
+    const src = this.state.media ? this.state.media.src : null;
     return (
       <div>
         {

@@ -3,8 +3,8 @@ const layers = {
 }
 
 const media = {
-  url: "",
-  type: ""
+  type: undefined,
+  path: undefined
 }
 
 const chapter = {
@@ -32,4 +32,4 @@ const story = {
     chapters: []
 };
 
-export {story, chapter};
+export {story, chapter, media};
