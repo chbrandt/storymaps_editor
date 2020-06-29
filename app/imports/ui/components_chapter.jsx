@@ -5,8 +5,8 @@ import { InputNumber } from './components_base.jsx';
 import { InputSelect } from './components_base.jsx';
 import { TextArea } from './components_base.jsx';
 
-import { MediaImage as Media } from './components_media.jsx';
-import { Layer } from './components_layer.jsx';
+import { Media } from './Media.jsx';
+import { Layer } from './Layer.jsx';
 
 import { validBounds } from '../api/utils.js';
 
