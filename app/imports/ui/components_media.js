@@ -72,10 +72,13 @@ export class MediaYoutube extends React.Component {
   }
 
   handleInputURL(value) {
+    // From: "https://www.youtube.com/watch?v=zGjxPQ3EzcU"
+    // To: "https://www.youtube.com/embed/zGjxPQ3EzcU"
     console.log(`Entered URL: ${value}`);
     const embedURL = value.includes("watch") ? value.replace('/watch?v=','/embed/') : value;
     const media = {src: embedURL};
     this.setState({ media: media });
+    this.props.onChange(media);
   }
 
   // handleSubmit() {
@@ -100,4 +103,52 @@ export class MediaYoutube extends React.Component {
     );
   }
 }
-// "https://www.youtube.com/embed/zGjxPQ3EzcU?controls=0"
+
+
+
+export class MediaSketchfab extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { media: props.value };
+
+    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputURL = this.handleInputURL.bind(this);
+  }
+
+  handleInputURL(value) {
+    // From: https://sketchfab.com/3d-models/skeleton-animated-character-7934529c761f4031b623d6ca0e1e3546
+    // To: https://sketchfab.com/models/7934529c761f4031b623d6ca0e1e3546/embed
+    console.log(`Entered URL: ${value}`);
+    let embedURL = value;
+    if (value.includes("3d-models")) {
+      const _id = value.split('-').pop();
+      embedURL = `https://sketchfab.com/models/${_id}/embed`;
+    }
+    // const embedURL =  ? value.replace('/watch?v=','/embed/') : value;
+    const media = {src: embedURL};
+    this.setState({ media: media });
+    this.props.onChange(media);
+  }
+
+  // handleSubmit() {
+  //   const file = this.fileInput.current.files[0];
+  //   const name = file.name;
+  //   console.log(`Selected file - ${file.name}`);
+  //   const src = file ? URL.createObjectURL(file) : null;
+  //   const media = {path: name, src: src};
+  //   this.setState({ media: media });
+  //   this.props.onChange(media);
+  // }
+
+  render() {
+    console.log(`MediaSketchfab (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
+    const src = this.state.media ? this.state.media.src : null;
+    return (
+      <div>
+        {(src != null && src.includes('sketchfab'))
+        && <iframe title="3D model" width="640" height="480" src={src} frameBorder="0" allow="autoplay; fullscreen; vr" mozAllowFullScreen="true" webKitAllowFullScreen="true"></iframe>}
+        <InputText onChange={this.handleInputURL}/>
+      </div>
+    );
+  }
+}
