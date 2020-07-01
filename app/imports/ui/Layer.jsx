@@ -2,7 +2,7 @@ import React from 'react';
 
 import { stringify } from '../api/utils.js';
 
-import { InputSelect } from './components_base.jsx';
+import { InputSelect } from './components_base';
 
 
 /* LAYERS */

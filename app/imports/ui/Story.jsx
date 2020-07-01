@@ -7,12 +7,12 @@ import { Map } from './Map.jsx';
 import { Chapter } from './Chapter.jsx';
 
 // Base (HTML elements) components
-import { Select } from './components_base.jsx';
-import { TextArea } from './components_base.jsx';
-import { InputText } from './components_base.jsx';
+import { Select } from './components_base';
+import { TextArea } from './components_base';
+import { InputText } from './components_base';
 
 // List HOC
-import { toList } from './components_collections.jsx';
+import { toList } from './components_collections';
 
 
 // TEMPLATES and CONFIGS
@@ -171,6 +171,8 @@ export class Story extends React.Component {
           }
           <StoryChapters items={chapters}
                           label="Chapters list"
+                          button_add="Add Chapter"
+                          button_del="Delete Chapter"
                           active={active_chapter}
                           onChange={(value) => this.handleChangeChapters(value)}
           />

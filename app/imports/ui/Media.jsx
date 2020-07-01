@@ -2,7 +2,7 @@ import React from 'react';
 
 import { stringify } from '../api/utils.js';
 
-import { Select } from './components_base.jsx';
+import { Select } from './components_base';
 import { MediaImage } from './components_media.jsx';
 
 import { media as MEDIA_TEMPLATE } from '../api/templates.js';

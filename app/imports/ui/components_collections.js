@@ -1,7 +1,38 @@
+/**
+ * React Components to handle collections of other components
+ *
+ * @module
+ */
 import React from 'react';
 
 import { stringify } from '../api/utils.js';
 
+/**
+ * Any (react) component accepting 'value' and 'onChange(value)' properties
+ * @typedef ItemComponent
+ */
+/**
+ * Callback pushing all items in `ItemsList` when some/any is changed.
+ * @callback onChange
+ * @param {Array.*} items
+ */
+/**
+ * List of `ItemComponent` objects
+ * @typedef ItemsList
+ * @properties {Array.*} items
+ * @propertirs {onChange} onChange
+ * @properties {number} [active=null] If given, only the 'active' component is rendered
+ * @properties {string} [label_add="Add"] Label over the button to add a new item
+ * @properties {string} [label_del="Delete"] Label over the button to delete an item
+ * @properties {string} label
+ */
+
+/**
+ * Higher-Order Component to manage a list of components
+ *
+ * @class
+ * @param {ItemComponent} ItemComponent
+ */
 export function toList(ItemComponent) {
   return (
     class ItemsList extends React.Component {
@@ -77,10 +108,11 @@ export function toList(ItemComponent) {
         const props = this.props;
         const items = props.items;
         const active = props.active;
-        const button = props.button || "Add";
+        const label_add = props.button_add || "Add";
+        const label_del = props.button_del || "Delete";
         return (
           <div>
-            <button onClick={this.handleCreate}>{button}</button>
+            <button onClick={this.handleCreate}>{label_add}</button>
             <label>
               {this.props.label}
               {items.map((item,i) => {
@@ -91,7 +123,7 @@ export function toList(ItemComponent) {
                       <ItemComponent value={item}
                                       onChange={(value) => this.handleChange(index, value)}
                       />
-                      <button onClick={() => this.handleDelete(index)}>"Delete"</button>
+                      <button onClick={() => this.handleDelete(index)}>{label_del}</button>
                     </div>
                   );
                 }

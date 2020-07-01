@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { InputText } from './components_base.jsx';
-import { InputNumber } from './components_base.jsx';
-import { InputSelect } from './components_base.jsx';
-import { TextArea } from './components_base.jsx';
+import { InputText } from './components_base';
+import { InputNumber } from './components_base';
+import { InputSelect } from './components_base';
+import { TextArea } from './components_base';
 
 import { Media } from './Media.jsx';
 import { Layer } from './Layer.jsx';
 
 import { validBounds } from '../api/utils.js';
 
-import { toList } from './components_collections.jsx';
+import { toList } from './components_collections';
 
 
 /*
