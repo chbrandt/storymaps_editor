@@ -4,7 +4,7 @@ import { stringify } from '../api/utils.js';
 import { capitalize } from '../api/utils.js';
 
 import { Select } from './components_base';
-import { MediaImage } from './components_media';
+import { MediaImage, MediaYoutube } from './components_media';
 
 import { media as MEDIA_TEMPLATE } from '../api/templates.js';
 
@@ -82,7 +82,7 @@ function media_factory(mtype, path, src, onChange) {
       console.log("Asking for Image comp");
       return <MediaImage value={{path,src}} onChange={onChange}/>;
     case 'youtube':
-      console.log("Asking for YouTube comp");
+      return <MediaYoutube value={{src}} onChange={onChange}/>;
     case 'sketchfab':
       console.log("Asking for Sketchfab comp");
     default:
