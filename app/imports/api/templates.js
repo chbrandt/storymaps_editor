@@ -1,5 +1,6 @@
-const layers = {
-  url: ""
+const layer = {
+  type: undefined,
+  url: undefined
 }
 
 const media = {
@@ -32,4 +33,4 @@ const story = {
     chapters: []
 };
 
-export {story, chapter, media};
+export {story, chapter, media, layer};
