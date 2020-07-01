@@ -6,6 +6,7 @@ import { stringify } from '../api/utils.js';
 import { Select } from './components_base';
 import { layer as LAYER_TEMPLATE } from '../api/templates.js';
 
+import { LayerTMS } from './components_layer';
 
 /**
  * Template object/value for Layer
@@ -64,20 +65,20 @@ export class Layer extends React.Component {
                 selected={selected}
                 onChange={this.handleSelectType}
             />}
-        {layer_factory(this.state.type, this.state.path, this.state.src, this.handleChange)}
+        {layer_factory(this.state.type, this.state.url, this.handleChange)}
       </div>
     );
   }
 }
 
-function layer_factory(ltype, path, src, onChange) {
+function layer_factory(ltype, url, onChange) {
   if (ltype == null) {
     return null;
   }
-  switch(ltype.toLowerCase()) {
+  switch(ltype) {
     case 'TMS':
       console.log("Asking for TMS comp");
-      break;
+      return <LayerTMS value={url} onChange={onChange}/>;
     case 'WMS':
       console.log("Asking for WMS comp");
       break;
