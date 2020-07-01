@@ -1,31 +1,47 @@
 import React from 'react';
 
 import { stringify } from '../api/utils.js';
+import { capitalize } from '../api/utils.js';
 
 import { Select } from './components_base';
-import { MediaImage } from './components_media.jsx';
+import { MediaImage } from './components_media';
 
 import { media as MEDIA_TEMPLATE } from '../api/templates.js';
 
+/**
+ * Template object/value for Media
+ * @constant MEDIA_TEMPLATE
+ */
 
+/**
+ * @class
+ */
 export class Media extends React.Component {
+  /**
+   *
+   * @param {Object} props
+   * @param {Object} [props.value=MEDIA_TEMPLATE]
+   *
+   * @property {Object} state
+   * @property {string|number} state.type
+   */
   constructor(props) {
     super(props);
     this.state = props.value || MEDIA_TEMPLATE;
-    this.media_types = ['Image', 'Youtube', 'Sketchfab'];
+    this.media_types = ['image', 'youtube', 'sketchfab'];
 
     this.handleSelectType = this.handleSelectType.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSelectType(value) {
-    console.log("Selected Media item:", this.media_types[value]);
+    console.log("Selected Media item:", value);
     this.setState({
-      active_type: value,
-      type: this.media_types[value]
+      type: value
     });
   }
 
-  handleChange = (value) => {
+  handleChange(value) {
     console.log("handleChange in Media, value:", value);
     const {path, src} = value;
     this.props.onChange({
@@ -38,25 +54,22 @@ export class Media extends React.Component {
   render() {
     console.log(`Media (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
     const media_types = this.media_types;
-    const selected = this.state.active_type;
+    const selected = this.state.type;
 
-    let Comp_;
     if (this.state.path != null) {
       console.assert(this.state.type != null, "Expecting non-NULL media data/type");
-      Comp_ = (<div>
-                {media_factory(this.state.type, this.state.path, this.state.src, this.handleChange)}
-              </div>);
-    } else {
-      Comp_ = (<div>
-                <Select items={media_types}
-                        selected={selected}
-                        onChange={this.handleSelectType}
-                />
-                {media_factory(this.state.type, this.state.path, this.state.src, this.handleChange)}
-              </div>);
     }
 
-    return Comp_;
+    return (
+      <div>
+        {this.state.path == null
+         && <Select items={media_types}
+                selected={selected}
+                onChange={this.handleSelectType}
+            />}
+        {media_factory(this.state.type, this.state.path, this.state.src, this.handleChange)}
+      </div>
+    );
   }
 }
 
