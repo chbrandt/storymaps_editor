@@ -64,6 +64,7 @@ export const StoryPlanet = (props) => <Select label="Bodies"
                                               placeholder="Select a planet/body"
                                               items={props.value}
                                               onChange={props.onChange}
+                                              selected={props.selected}
                                               />
 
 
@@ -142,7 +143,7 @@ export class Story extends React.Component {
       active_chapter != null && chapters[active_chapter] != null
       ? chapters[active_chapter].view
       : null);
-    const body_basemap = BASEMAPS[Object.keys(BASEMAPS)[this.state.body]];
+    const body_basemap = BASEMAPS[this.state.body];
 
     return (
       <div id="story">
@@ -154,6 +155,7 @@ export class Story extends React.Component {
           />
           <br/>
           <StoryPlanet value={Object.keys(BASEMAPS)}
+                        selected={this.state.body}
                         onChange={(value) => this.handleChange("body", value)}
           />
           <br/>
