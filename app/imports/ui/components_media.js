@@ -81,16 +81,6 @@ export class MediaYoutube extends React.Component {
     this.props.onChange(media);
   }
 
-  // handleSubmit() {
-  //   const file = this.fileInput.current.files[0];
-  //   const name = file.name;
-  //   console.log(`Selected file - ${file.name}`);
-  //   const src = file ? URL.createObjectURL(file) : null;
-  //   const media = {path: name, src: src};
-  //   this.setState({ media: media });
-  //   this.props.onChange(media);
-  // }
-
   render() {
     console.log(`MediaImage (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
     const src = this.state.media ? this.state.media.src : null;
@@ -129,16 +119,6 @@ export class MediaSketchfab extends React.Component {
     this.setState({ media: media });
     this.props.onChange(media);
   }
-
-  // handleSubmit() {
-  //   const file = this.fileInput.current.files[0];
-  //   const name = file.name;
-  //   console.log(`Selected file - ${file.name}`);
-  //   const src = file ? URL.createObjectURL(file) : null;
-  //   const media = {path: name, src: src};
-  //   this.setState({ media: media });
-  //   this.props.onChange(media);
-  // }
 
   render() {
     console.log(`MediaSketchfab (state,props):\n${stringify(this.state)}\n${stringify(this.props)}`);
