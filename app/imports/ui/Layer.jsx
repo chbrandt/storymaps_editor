@@ -7,6 +7,7 @@ import { Select } from './components_base';
 import { layer as LAYER_TEMPLATE } from '../api/templates.js';
 
 import { LayerTMS } from './components_layer';
+import { LayerWMS } from './components_layer';
 
 /**
  * Template object/value for Layer
@@ -27,8 +28,8 @@ export class Layer extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = props.value || LAYER_TEMPLATE;
-    this.layer_types = ['TMS', 'WMS', 'WFS'];
+    this.state = props.value || {type: undefined};
+    this.layer_types = ['TMS', 'WMS', 'WFS', 'Point', 'Linestring', 'Polygon'];
 
     this.handleSelectType = this.handleSelectType.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -41,12 +42,10 @@ export class Layer extends React.Component {
     });
   }
 
-  handleChange(value) {
-    console.log("handleChange in Layer, value:", value);
-    this.props.onChange({
-      type: this.state.type,
-      url: value
-    })
+  handleChange(val) {
+    console.log("handleChange in Layer. Value:", val);
+    const value = Object.assign({}, {...this.state.value}, {...val});
+    this.props.onChange(value);
   }
 
   render() {
@@ -54,34 +53,30 @@ export class Layer extends React.Component {
     const layer_types = this.layer_types;
     const selected = this.state.type;
 
-    if (this.state.url != null) {
-      console.assert(this.state.type != null, "Expecting non-NULL layer data/type");
-    }
-
     return (
       <div>
         {this.state.url == null
-         && <Select items={layer_types}
-                selected={selected}
-                onChange={this.handleSelectType}
-            />}
-        {layer_factory(this.state.type, this.state.url, this.handleChange)}
+          && <Select items={layer_types}
+            selected={selected}
+            onChange={this.handleSelectType}
+          />}
+        {layer_factory(this.state.type, this.state, this.handleChange)}
       </div>
     );
   }
 }
 
-function layer_factory(ltype, url, onChange) {
+function layer_factory(ltype, state, onChange) {
   if (ltype == null) {
     return null;
   }
-  switch(ltype) {
+  switch (ltype) {
     case 'TMS':
       console.log("Asking for TMS comp");
-      return <LayerTMS value={url} onChange={onChange}/>;
+      return <LayerTMS value={state} onChange={onChange} />;
     case 'WMS':
       console.log("Asking for WMS comp");
-      break;
+      return <LayerWMS value={state} onChange={onChange} />;
     case 'WFS':
       console.log("Asking for WFS comp");
       break;
