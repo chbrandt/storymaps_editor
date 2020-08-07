@@ -35,17 +35,18 @@ export class Layer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSelectType(value) {
-    console.log("Selected Layer item:", value);
-    this.setState({
-      type: value
-    });
+  handleSelectType(type) {
+    console.log("Selected Layer item:", type);
+    this.setState({ type });
   }
 
-  handleChange(path) {
-    console.log("handleChange in Layer. Value:", path);
-    const value = Object.assign({}, {...this.state.value}, {...path});
-    this.setState({ path: value })
+  handleChange(params) {
+    console.log("handleChange in Layer. Value:", params);
+    // const value = Object.assign({}, {...this.state.value}, {params});
+    // this.setState({ path: value })
+    // this.props.onChange(value);
+    const value = Object.assign({}, {...this.state}, {...params});
+    this.setState({ value });
     this.props.onChange(value);
   }
 
@@ -61,20 +62,21 @@ export class Layer extends React.Component {
             selected={selected}
             onChange={this.handleSelectType}
           />}
-        {layer_factory(this.state.type, this.state.path, this.handleChange)}
+        {layer_factory(this.state, this.handleChange)}
       </div>
     );
   }
 }
 
-function layer_factory(ltype, path, onChange) {
-  if (ltype == null) {
+function layer_factory(state, onChange) {
+  if (state.type == null) {
     return null;
   }
-  switch (ltype) {
+  switch (state.type) {
     case 'TMS':
       console.log("Asking for TMS comp");
-      return <LayerTMS value={path} onChange={onChange} />;
+      // return <LayerTMS value={path} onChange={onChange} />;
+      return <LayerTMS url={state.url} onChange={(url) => onChange({ url })} />;
     case 'WMS':
       console.log("Asking for WMS comp");
       return <LayerWMS value={path} onChange={onChange} />;

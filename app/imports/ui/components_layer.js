@@ -5,9 +5,9 @@ import { validBounds } from '../api/utils';
 
 
 export const LayerTMS = (props) => {
-  console.log("layer tms",props);
+  console.log("layer tms", props);
   return (
-    <InputText value={props.value.url}
+    <InputText value={props.url}
       placeholder="TMS layer url"
       onChange={props.onChange}
     />

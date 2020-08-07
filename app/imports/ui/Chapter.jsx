@@ -5,6 +5,7 @@ import { stringify } from '../api/utils.js';
 import { ChapterTitle } from './components_chapter.jsx';
 import { ChapterText } from './components_chapter.jsx';
 import { ChapterView } from './components_chapter.jsx';
+
 import { ChapterLayers } from './components_chapter.jsx';
 import { ChapterMedia } from './components_chapter.jsx';
 
@@ -62,7 +63,7 @@ export class Chapter extends React.Component {
         <br/>
         <ChapterLayers items={this.state.layers}
                         label="Layers list"
-                        onChange={(value) => this.handleChange("layers", value)}
+                        onChange={(objList) => this.handleChange("layers", objList)}
         />
       </div>
     );
