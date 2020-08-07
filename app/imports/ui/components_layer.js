@@ -45,6 +45,7 @@ export class LayerWMS extends React.Component {
   }
 
   render() {
+    console.log("WMS (state,props):", this.state, this.props);
     const value = this.state.value;
     if (!value) {
       return null;

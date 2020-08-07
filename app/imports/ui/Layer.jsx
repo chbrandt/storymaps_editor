@@ -42,9 +42,10 @@ export class Layer extends React.Component {
     });
   }
 
-  handleChange(val) {
-    console.log("handleChange in Layer. Value:", val);
-    const value = Object.assign({}, {...this.state.value}, {...val});
+  handleChange(path) {
+    console.log("handleChange in Layer. Value:", path);
+    const value = Object.assign({}, {...this.state.value}, {...path});
+    this.setState({ path: value })
     this.props.onChange(value);
   }
 
@@ -55,28 +56,28 @@ export class Layer extends React.Component {
 
     return (
       <div>
-        {this.state.url == null
+        {this.state.path == null
           && <Select items={layer_types}
             selected={selected}
             onChange={this.handleSelectType}
           />}
-        {layer_factory(this.state.type, this.state, this.handleChange)}
+        {layer_factory(this.state.type, this.state.path, this.handleChange)}
       </div>
     );
   }
 }
 
-function layer_factory(ltype, state, onChange) {
+function layer_factory(ltype, path, onChange) {
   if (ltype == null) {
     return null;
   }
   switch (ltype) {
     case 'TMS':
       console.log("Asking for TMS comp");
-      return <LayerTMS value={state} onChange={onChange} />;
+      return <LayerTMS value={path} onChange={onChange} />;
     case 'WMS':
       console.log("Asking for WMS comp");
-      return <LayerWMS value={state} onChange={onChange} />;
+      return <LayerWMS value={path} onChange={onChange} />;
     case 'WFS':
       console.log("Asking for WFS comp");
       break;
