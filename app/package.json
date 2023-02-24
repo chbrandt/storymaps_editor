@@ -27,6 +27,6 @@
     "babel-eslint": "^10.1.0",
     "eslint-plugin-react": "^7.20.2",
     "eslint-plugin-jsdoc": "^28.5.1",
-    "jsdoc": "^3.6.4"
+    "jsdoc": "^3.6.11"
   }
 }
